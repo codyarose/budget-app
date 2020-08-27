@@ -1,6 +1,6 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
 
-import expensesReducer from '../features/expense/expensesSlice'
+import expensesReducer from '../features/expenses/expensesSlice'
 import filterReducer from '../features/filter/filterSlice'
 
 export const store = configureStore({

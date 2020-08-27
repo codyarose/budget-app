@@ -1,14 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { v4 as uuid } from 'uuid'
 
-import { FilterState } from '../filter/filterSlice'
+import { RootState } from '../../app/store'
 
 export interface Expense {
-	id?: string
+	id: string
 	description: string
 	note: string
 	amount: number
-	createdAt: number | Date
+	createdAt: number
 }
 
 const initialState: Expense[] = []
@@ -17,7 +17,7 @@ export const expensesSlice = createSlice({
 	name: 'expenses',
 	initialState,
 	reducers: {
-		addExpense: (state, action: PayloadAction<Expense>) => {
+		addExpense: (state, action: PayloadAction<Partial<Expense>>) => {
 			const {
 				description = '',
 				note = '',
@@ -32,9 +32,10 @@ export const expensesSlice = createSlice({
 				createdAt,
 			})
 		},
-		removeExpense: (state, action: PayloadAction<Pick<Expense, 'id'>>) => {
-			const { id } = action.payload
-			state = state.filter((expense) => expense.id !== id)
+		removeExpense: (state, action: PayloadAction<string>) => {
+			const id = action.payload
+			const index = state.findIndex((expense) => expense.id === id)
+			state.splice(index, 1)
 		},
 		editExpense: (state, action) => {
 			const { id, updates } = action.payload
@@ -55,11 +56,13 @@ export const expensesSlice = createSlice({
 
 export const { addExpense, removeExpense, editExpense } = expensesSlice.actions
 
-export const selectVisibleExpenses = (
-	state: Expense[],
-	{ text, sortBy, startDate, endDate }: FilterState,
-): Expense[] => {
-	return state
+export const selectExpenses = (state: RootState): Expense[] => state.expenses
+
+export const selectVisibleExpenses = (state: RootState): Expense[] => {
+	const expenses = state.expenses
+	const { startDate, endDate, text, sortBy } = state.filter
+
+	return expenses
 		.filter((expense) => {
 			const startDateMatch =
 				typeof startDate !== 'number' || expense.createdAt >= startDate
