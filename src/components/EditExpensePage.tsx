@@ -1,15 +1,15 @@
-import React, { FC } from 'react'
-import { RouteComponentProps } from 'react-router-dom'
+import React, { ReactElement } from 'react'
 
-interface MatchParams {
-	id: string
-}
-
-interface Props extends RouteComponentProps<MatchParams> {}
-
-const EditExpensePage: FC<Props> = (props) => {
-	console.log(props)
-	return <div>Editing expense with id of {props.match.params.id}</div>
+const EditExpensePage = ({
+	match,
+}: {
+	match: {
+		params: {
+			id: string
+		}
+	}
+}): ReactElement => {
+	return <div>Editing expense with id of {match.params.id}</div>
 }
 
 export default EditExpensePage
