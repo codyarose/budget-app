@@ -1,15 +1,13 @@
 import React, { FC } from 'react'
 import { useDispatch } from 'react-redux'
-import { removeExpense } from '../features/expenses/expensesSlice'
+import { removeExpense, Expense } from '../features/expenses/expensesSlice'
 
-interface Props {
-	description: string
-	amount: number
-	createdAt: number
-	id: string
-}
-
-const ExpenseListItem: FC<Props> = ({ description, amount, createdAt, id }) => {
+const ExpenseListItem: FC<Expense> = ({
+	description,
+	amount,
+	createdAt,
+	id,
+}) => {
 	const dispatch = useDispatch()
 
 	return (
