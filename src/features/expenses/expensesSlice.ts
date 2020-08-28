@@ -1,14 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { v4 as uuid } from 'uuid'
+import { Moment } from 'moment'
 
 import { RootState } from '../../app/store'
+import moment from 'moment'
 
 export interface Expense {
 	id: string
 	description: string
 	note: string
 	amount: number
-	createdAt: number
+	createdAt: Moment | number
 }
 
 const initialState: Expense[] = []
@@ -22,7 +24,7 @@ export const expensesSlice = createSlice({
 				description = '',
 				note = '',
 				amount = 0,
-				createdAt = 0,
+				createdAt = moment().valueOf(),
 			} = action.payload
 			state.push({
 				id: uuid(),
