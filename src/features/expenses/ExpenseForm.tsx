@@ -5,20 +5,20 @@ import { SingleDatePicker } from 'react-dates'
 import 'react-dates/lib/css/_datepicker.css'
 import 'react-dates/initialize'
 
-import { Expense } from './expensesSlice'
+import { Expense, ExpenseData } from './expensesSlice'
 import Error from '../../components/Error'
 
 interface Props {
 	expense?: Expense
-	onSubmit: (arg0: Partial<Expense>) => void
+	onSubmit: (arg0: ExpenseData) => void
 }
 
-interface FormState extends Omit<Expense, 'amount'> {
+interface FormState extends Omit<ExpenseData, 'amount'> {
 	amount: string
 }
 
 const ExpenseForm: FC<Props> = ({ expense, onSubmit }) => {
-	const [formState, setFormState] = useState<Partial<FormState>>({
+	const [formState, setFormState] = useState<FormState>({
 		description: expense?.description || '',
 		amount: expense ? (expense?.amount / 100).toString() : '',
 		note: expense?.note || '',

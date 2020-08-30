@@ -13,13 +13,15 @@ export interface Expense {
 	createdAt: Moment | number
 }
 
+export type ExpenseData = Omit<Expense, 'id'>
+
 const initialState: Expense[] = []
 
 export const expensesSlice = createSlice({
 	name: 'expenses',
 	initialState,
 	reducers: {
-		addExpense: (state, action: PayloadAction<Partial<Expense>>) => {
+		addExpense: (state, action: PayloadAction<Partial<ExpenseData>>) => {
 			const {
 				description = '',
 				note = '',
@@ -42,7 +44,7 @@ export const expensesSlice = createSlice({
 		editExpense: (
 			state,
 			action: PayloadAction<{
-				editedExpense: Partial<Expense>
+				editedExpense: ExpenseData
 				id: string
 			}>,
 		) => {
