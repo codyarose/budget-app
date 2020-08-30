@@ -1,17 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import moment, { Moment } from 'moment'
 
 export interface FilterState {
 	text: string
 	sortBy: string
-	startDate: unknown
-	endDate: unknown
+	startDate: Moment
+	endDate: Moment
 }
 
 const initialState: FilterState = {
 	text: '',
 	sortBy: 'date',
-	startDate: '',
-	endDate: '',
+	startDate: moment().startOf('month'),
+	endDate: moment().endOf('month'),
 }
 
 export const filterSlice = createSlice({
@@ -27,16 +28,10 @@ export const filterSlice = createSlice({
 		sortByAmount: (state) => {
 			state.sortBy = 'amount'
 		},
-		setStartDate: (
-			state,
-			action: PayloadAction<Pick<FilterState, 'startDate'>>,
-		) => {
+		setStartDate: (state, action: PayloadAction<Moment>) => {
 			state.startDate = action.payload
 		},
-		setEndDate: (
-			state,
-			action: PayloadAction<Pick<FilterState, 'endDate'>>,
-		) => {
+		setEndDate: (state, action: PayloadAction<Moment>) => {
 			state.endDate = action.payload
 		},
 	},
