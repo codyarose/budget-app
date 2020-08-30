@@ -9,6 +9,7 @@ import { Expense } from '../features/expenses/expensesSlice'
 import Error from './Error'
 
 interface Props {
+	expense?: Expense
 	onSubmit: (arg0: Partial<Expense>) => void
 }
 
@@ -16,12 +17,12 @@ interface FormState extends Omit<Expense, 'amount'> {
 	amount: string
 }
 
-const ExpenseForm: FC<Props> = ({ onSubmit }) => {
+const ExpenseForm: FC<Props> = ({ expense, onSubmit }) => {
 	const [formState, setFormState] = useState<Partial<FormState>>({
-		description: '',
-		amount: '',
-		note: '',
-		createdAt: moment().valueOf(),
+		description: expense?.description || '',
+		amount: expense ? (expense?.amount / 100).toString() : '',
+		note: expense?.note || '',
+		createdAt: expense?.createdAt || moment().valueOf(),
 	})
 
 	const [error, setError] = useState('')

@@ -39,19 +39,24 @@ export const expensesSlice = createSlice({
 			const index = state.findIndex((expense) => expense.id === id)
 			state.splice(index, 1)
 		},
-		editExpense: (state, action) => {
-			const { id, updates } = action.payload
-			const updatedExpenses = state.map((expense) => {
+		editExpense: (
+			state,
+			action: PayloadAction<{
+				editedExpense: Partial<Expense>
+				id: string
+			}>,
+		) => {
+			const { editedExpense, id } = action.payload
+			return state.map((expense) => {
 				if (expense.id === id) {
 					return {
 						...expense,
-						...updates,
+						...editedExpense,
 					}
 				} else {
 					return expense
 				}
 			})
-			state = updatedExpenses
 		},
 	},
 })
@@ -66,10 +71,13 @@ export const selectVisibleExpenses = (state: RootState): Expense[] => {
 
 	return expenses
 		.filter((expense) => {
-			const startDateMatch =
-				typeof startDate !== 'number' || expense.createdAt >= startDate
-			const endDateMatch =
-				typeof endDate !== 'number' || expense.createdAt <= endDate
+			const createdAtMoment = moment(expense.createdAt)
+			const startDateMatch = startDate
+				? startDate.isSameOrBefore(createdAtMoment, 'day')
+				: true
+			const endDateMatch = endDate
+				? endDate.isSameOrAfter(createdAtMoment, 'day')
+				: true
 			const textMatch = expense.description
 				.toLowerCase()
 				.includes(text.toLowerCase())

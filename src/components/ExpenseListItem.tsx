@@ -1,6 +1,7 @@
 import React, { FC } from 'react'
-import { useDispatch } from 'react-redux'
-import { removeExpense, Expense } from '../features/expenses/expensesSlice'
+import { Link } from 'react-router-dom'
+
+import { Expense } from '../features/expenses/expensesSlice'
 
 const ExpenseListItem: FC<Expense> = ({
 	description,
@@ -8,15 +9,14 @@ const ExpenseListItem: FC<Expense> = ({
 	createdAt,
 	id,
 }) => {
-	const dispatch = useDispatch()
-
 	return (
 		<div>
-			<h4>{description}</h4>
+			<Link to={`/edit/${id}`}>
+				<h4>{description}</h4>
+			</Link>
 			<p>
 				{amount} - {createdAt}
 			</p>
-			<button onClick={() => dispatch(removeExpense(id))}>Remove</button>
 		</div>
 	)
 }
