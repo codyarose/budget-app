@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import ExpenseForm from './ExpenseForm'
+import ExpenseForm from '../features/expenses/ExpenseForm'
 import { useDispatch } from 'react-redux'
 import { addExpense } from '../features/expenses/expensesSlice'
 import { RouteComponentProps } from 'react-router-dom'

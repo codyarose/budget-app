@@ -5,8 +5,8 @@ import { SingleDatePicker } from 'react-dates'
 import 'react-dates/lib/css/_datepicker.css'
 import 'react-dates/initialize'
 
-import { Expense } from '../features/expenses/expensesSlice'
-import Error from './Error'
+import { Expense } from './expensesSlice'
+import Error from '../../components/Error'
 
 interface Props {
 	expense?: Expense

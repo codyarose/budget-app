@@ -1,13 +1,13 @@
 import React, { FC, ChangeEvent, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { RootState } from '../app/store'
+import { RootState } from '../../app/store'
 import {
 	setTextFilter,
 	sortByDate,
 	sortByAmount,
 	setStartDate,
 	setEndDate,
-} from '../features/filter/filterSlice'
+} from './filterSlice'
 import { DateRangePicker } from 'react-dates'
 
 const ExpenseListFilter: FC = () => {

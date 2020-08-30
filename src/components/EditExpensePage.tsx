@@ -5,7 +5,7 @@ import {
 	editExpense,
 	removeExpense,
 } from '../features/expenses/expensesSlice'
-import ExpenseForm from './ExpenseForm'
+import ExpenseForm from '../features/expenses/ExpenseForm'
 import { RouteComponentProps } from 'react-router-dom'
 
 interface Props {
