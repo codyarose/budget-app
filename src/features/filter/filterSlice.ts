@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import moment, { Moment } from 'moment'
+import { RootState } from '../../app/store'
 
 export interface FilterState {
 	text: string
@@ -8,7 +9,7 @@ export interface FilterState {
 	endDate: Moment
 }
 
-const initialState: FilterState = {
+export const initialState: FilterState = {
 	text: '',
 	sortBy: 'date',
 	startDate: moment().startOf('month'),
@@ -46,3 +47,5 @@ export const {
 } = filterSlice.actions
 
 export default filterSlice.reducer
+
+export const selectFilters = (state: RootState): FilterState => state.filter

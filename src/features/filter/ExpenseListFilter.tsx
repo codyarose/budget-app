@@ -1,19 +1,17 @@
 import React, { FC, ChangeEvent, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { RootState } from '../../app/store'
 import {
 	setTextFilter,
 	sortByDate,
 	sortByAmount,
 	setStartDate,
 	setEndDate,
+	selectFilters,
 } from './filterSlice'
 import { DateRangePicker } from 'react-dates'
 
 const ExpenseListFilter: FC = () => {
-	const { text, sortBy, startDate, endDate } = useSelector(
-		(state: RootState) => state.filter,
-	)
+	const { text, sortBy, startDate, endDate } = useSelector(selectFilters)
 	const dispatch = useDispatch()
 
 	const [calendarFocused, setCalendarFocused] = useState<
