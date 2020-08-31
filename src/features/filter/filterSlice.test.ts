@@ -11,44 +11,69 @@ import moment from 'moment'
 describe('filter reducer', () => {
 	it('should handle initial state', () => {
 		const nextState = initialState
+
 		const result = filter(undefined, { type: undefined })
-		expect(result).toEqual(nextState)
+
+		expect(nextState).toEqual(result)
 	})
 
 	it('should create set start date action object', () => {
-		expect(setStartDate(moment(0))).toEqual({
+		const nextState = setStartDate(moment(0))
+
+		const result = {
 			type: setStartDate.type,
 			payload: moment(0),
-		})
+		}
+
+		expect(nextState).toEqual(result)
 	})
 
 	it('should create end start date action object', () => {
-		expect(setEndDate(moment(0))).toEqual({
+		const nextState = setEndDate(moment(0))
+
+		const result = {
 			type: setEndDate.type,
 			payload: moment(0),
-		})
+		}
+
+		expect(nextState).toEqual(result)
 	})
 
 	it('should create sort by date action object', () => {
-		expect(sortByDate()).toEqual({ type: sortByDate.type })
+		const nextState = sortByDate()
+
+		const result = { type: sortByDate.type }
+
+		expect(nextState).toEqual(result)
 	})
 
 	it('should create sort by amount action object', () => {
-		expect(sortByAmount()).toEqual({ type: sortByAmount.type })
+		const nextState = sortByAmount()
+
+		const result = { type: sortByAmount.type }
+
+		expect(nextState).toEqual(result)
 	})
 
 	it('should create set text filter action object with default value', () => {
-		expect(setTextFilter('')).toEqual({
+		const nextState = setTextFilter('')
+
+		const result = {
 			type: setTextFilter.type,
 			payload: '',
-		})
+		}
+		expect(nextState).toEqual(result)
 	})
 
 	it('should create set text filter action object with provided value', () => {
 		const text = 'rent'
-		expect(setTextFilter(text)).toEqual({
+
+		const nextState = setTextFilter(text)
+
+		const result = {
 			type: setTextFilter.type,
 			payload: text,
-		})
+		}
+		expect(nextState).toEqual(result)
 	})
 })
