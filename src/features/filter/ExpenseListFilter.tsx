@@ -9,10 +9,14 @@ import {
 	selectFilters,
 } from './filterSlice'
 import { DateRangePicker } from 'react-dates'
+import moment from 'moment'
 
 const ExpenseListFilter: FC = () => {
 	const { text, sortBy, startDate, endDate } = useSelector(selectFilters)
 	const dispatch = useDispatch()
+
+	const momentStartDate = moment(startDate)
+	const momentEndDate = moment(endDate)
 
 	const [calendarFocused, setCalendarFocused] = useState<
 		'startDate' | 'endDate' | null
@@ -57,9 +61,9 @@ const ExpenseListFilter: FC = () => {
 				<option value="amount">Amount</option>
 			</select>
 			<DateRangePicker
-				startDate={startDate}
+				startDate={momentStartDate}
 				startDateId="startDateId"
-				endDate={endDate}
+				endDate={momentEndDate}
 				endDateId="endDateId"
 				onDatesChange={handleDatesChange}
 				focusedInput={calendarFocused}

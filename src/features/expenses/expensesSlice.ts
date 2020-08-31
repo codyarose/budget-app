@@ -74,11 +74,14 @@ export const selectVisibleExpenses = (state: RootState): Expense[] => {
 	return expenses
 		.filter((expense) => {
 			const createdAtMoment = moment(expense.createdAt)
+			const momentStartDate = moment(startDate)
+			const momentEndDate = moment(endDate)
+
 			const startDateMatch = startDate
-				? startDate.isSameOrBefore(createdAtMoment, 'day')
+				? momentStartDate.isSameOrBefore(createdAtMoment, 'day')
 				: true
 			const endDateMatch = endDate
-				? endDate.isSameOrAfter(createdAtMoment, 'day')
+				? momentEndDate.isSameOrAfter(createdAtMoment, 'day')
 				: true
 			const textMatch = expense.description
 				.toLowerCase()

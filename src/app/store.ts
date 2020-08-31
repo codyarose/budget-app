@@ -1,9 +1,4 @@
-import {
-	configureStore,
-	ThunkAction,
-	Action,
-	getDefaultMiddleware,
-} from '@reduxjs/toolkit'
+import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
 
 import expensesReducer from '../features/expenses/expensesSlice'
 import filterReducer from '../features/filter/filterSlice'
@@ -13,11 +8,6 @@ export const store = configureStore({
 		expenses: expensesReducer,
 		filter: filterReducer,
 	},
-	middleware: getDefaultMiddleware({
-		serializableCheck: {
-			ignoredPaths: ['filter.startDate', 'filter.endDate'],
-		},
-	}),
 })
 
 export type RootState = ReturnType<typeof store.getState>
