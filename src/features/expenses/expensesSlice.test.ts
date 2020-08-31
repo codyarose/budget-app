@@ -23,9 +23,16 @@ describe('expenses reducer', () => {
 	})
 
 	it('should create action to add expense with default values', () => {
-		expect(addExpense({})).toEqual({
+		const defaultData = {
+			description: '',
+			note: '',
+			amount: 0,
+			createdAt: 0,
+		}
+
+		expect(addExpense(defaultData)).toEqual({
 			type: addExpense.type,
-			payload: {},
+			payload: { ...defaultData },
 		})
 	})
 

@@ -26,7 +26,7 @@ export const expensesSlice = createSlice({
 				description = '',
 				note = '',
 				amount = 0,
-				createdAt = moment().valueOf(),
+				createdAt = 0,
 			} = action.payload
 			state.push({
 				id: uuid(),
