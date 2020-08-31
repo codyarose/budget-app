@@ -1,19 +1,20 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import moment, { Moment } from 'moment'
+import { Moment } from 'moment'
 import { RootState } from '../../app/store'
+import moment from 'moment'
 
 export interface FilterState {
 	text: string
 	sortBy: string
-	startDate: Moment
-	endDate: Moment
+	startDate: Moment | number
+	endDate: Moment | number
 }
 
 export const initialState: FilterState = {
 	text: '',
 	sortBy: 'date',
-	startDate: moment().startOf('month'),
-	endDate: moment().endOf('month'),
+	startDate: moment().startOf('month').valueOf(),
+	endDate: moment().endOf('month').valueOf(),
 }
 
 export const filterSlice = createSlice({
