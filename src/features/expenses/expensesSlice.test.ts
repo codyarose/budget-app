@@ -1,12 +1,20 @@
 import expenses, {
+	initialState,
 	addExpense,
 	editExpense,
 	removeExpense,
+	selectExpenses,
 } from './expensesSlice'
+
+import { initialState as FilterInitialState } from '../filter/filterSlice'
 
 describe('expenses reducer', () => {
 	it('should handle initial state', () => {
-		expect(expenses(undefined, { type: undefined })).toEqual([])
+		const nextState = initialState
+
+		const result = expenses(undefined, { type: undefined })
+
+		expect(result).toEqual(nextState)
 	})
 
 	it('should create action to add expense with provided values', () => {
@@ -98,5 +106,39 @@ describe('expenses reducer', () => {
 				createdAt: 1598763926009,
 			},
 		])
+	})
+})
+
+describe('selectExpenses', () => {
+	const expensesMockData = [
+		{
+			id: '1',
+			description: 'Internet',
+			note: '',
+			amount: 4500,
+			createdAt: 0,
+		},
+		{
+			id: '2',
+			description: 'Rent',
+			note: '',
+			amount: 147500,
+			createdAt: 1000,
+		},
+		{
+			id: '3',
+			description: 'Groceries',
+			note: '',
+			amount: 12300,
+			createdAt: 1000,
+		},
+	]
+	const state = {
+		expenses: expensesMockData,
+		filter: { ...FilterInitialState },
+	}
+
+	it('should return all current expenses', () => {
+		expect(selectExpenses(state)).toEqual(expensesMockData)
 	})
 })

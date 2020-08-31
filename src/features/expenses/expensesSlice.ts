@@ -15,7 +15,7 @@ export interface Expense {
 
 export type ExpenseData = Omit<Expense, 'id'>
 
-const initialState: Expense[] = []
+export const initialState: Expense[] = []
 
 export const expensesSlice = createSlice({
 	name: 'expenses',
