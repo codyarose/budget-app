@@ -50,3 +50,9 @@ export const {
 export default filterSlice.reducer
 
 export const selectFilters = (state: RootState): FilterState => state.filter
+export const selectText = (state: RootState): string => state.filter.text
+export const selectSortBy = (state: RootState): string => state.filter.sortBy
+export const selectStartDate = (state: RootState): Moment | number =>
+	state.filter.startDate
+export const selectEndDate = (state: RootState): Moment | number =>
+	state.filter.endDate
