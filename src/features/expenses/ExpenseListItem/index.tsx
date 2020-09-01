@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { Link } from 'react-router-dom'
 
-import { Expense } from '../features/expenses/expensesSlice'
+import { Expense } from '../expensesSlice'
 
 const ExpenseListItem: FC<Expense> = ({
 	description,
