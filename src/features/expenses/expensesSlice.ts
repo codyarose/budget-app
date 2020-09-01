@@ -39,12 +39,16 @@ export const expensesSlice = createSlice({
 		removeExpense: (state, action: PayloadAction<string>) => {
 			const id = action.payload
 			const index = state.findIndex((expense) => expense.id === id)
-			state.splice(index, 1)
+			if (index === -1) {
+				return state
+			} else {
+				state.splice(index, 1)
+			}
 		},
 		editExpense: (
 			state,
 			action: PayloadAction<{
-				editedExpense: ExpenseData
+				editedExpense: Partial<ExpenseData>
 				id: string
 			}>,
 		) => {
