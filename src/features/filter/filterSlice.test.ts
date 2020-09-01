@@ -5,75 +5,65 @@ import filter, {
 	setStartDate,
 	setEndDate,
 	initialState,
+	selectStartDate,
+	selectEndDate,
+	selectSortBy,
+	selectText,
 } from './filterSlice'
 import moment from 'moment'
 
 describe('filter reducer', () => {
 	it('should handle initial state', () => {
-		const nextState = initialState
+		const nextState = filter(undefined, { type: '@@INIT' })
 
-		const result = filter(undefined, { type: undefined })
+		const result = initialState
 
 		expect(nextState).toEqual(result)
 	})
 
-	it('should create set start date action object', () => {
-		const nextState = setStartDate(moment(0))
+	it('should set startDate filter', () => {
+		const data = moment()
 
-		const result = {
-			type: setStartDate.type,
-			payload: moment(0),
+		const nextState = filter(initialState, setStartDate(data))
+
+		const rootState = { expenses: [], filter: nextState }
+		expect(selectStartDate(rootState)).toEqual(data)
+	})
+
+	it('should set endDate filter', () => {
+		const data = moment(12345)
+
+		const nextState = filter(initialState, setEndDate(data))
+
+		const rootState = { expenses: [], filter: nextState }
+		expect(selectEndDate(rootState)).toEqual(data)
+	})
+
+	it('should set sortBy to date', () => {
+		const data = {
+			...initialState,
+			sortBy: 'amount',
 		}
 
-		expect(nextState).toEqual(result)
+		const nextState = filter(data, sortByDate())
+
+		const rootState = { expenses: [], filter: nextState }
+		expect(selectSortBy(rootState)).toBe('date')
 	})
 
-	it('should create end start date action object', () => {
-		const nextState = setEndDate(moment(0))
+	it('should set sortBy to amount', () => {
+		const nextState = filter(initialState, sortByAmount())
 
-		const result = {
-			type: setEndDate.type,
-			payload: moment(0),
-		}
-
-		expect(nextState).toEqual(result)
+		const rootState = { expenses: [], filter: nextState }
+		expect(selectSortBy(rootState)).toBe('amount')
 	})
 
-	it('should create sort by date action object', () => {
-		const nextState = sortByDate()
+	it('should set text filter', () => {
+		const text = 'bananas'
 
-		const result = { type: sortByDate.type }
+		const nextState = filter(initialState, setTextFilter(text))
 
-		expect(nextState).toEqual(result)
-	})
-
-	it('should create sort by amount action object', () => {
-		const nextState = sortByAmount()
-
-		const result = { type: sortByAmount.type }
-
-		expect(nextState).toEqual(result)
-	})
-
-	it('should create set text filter action object with default value', () => {
-		const nextState = setTextFilter('')
-
-		const result = {
-			type: setTextFilter.type,
-			payload: '',
-		}
-		expect(nextState).toEqual(result)
-	})
-
-	it('should create set text filter action object with provided value', () => {
-		const text = 'rent'
-
-		const nextState = setTextFilter(text)
-
-		const result = {
-			type: setTextFilter.type,
-			payload: text,
-		}
-		expect(nextState).toEqual(result)
+		const rootState = { expenses: [], filter: nextState }
+		expect(selectText(rootState)).toBe(text)
 	})
 })
