@@ -12,9 +12,6 @@ const Header: FC = () => {
 			<StyledNavLink to="/create" activeClassName="is-active">
 				Create
 			</StyledNavLink>
-			<StyledNavLink to="/help" activeClassName="is-active">
-				Help
-			</StyledNavLink>
 		</header>
 	)
 }
