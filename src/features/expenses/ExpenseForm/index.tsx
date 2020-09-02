@@ -76,6 +76,7 @@ const ExpenseForm: FC<Props> = ({ expense, onSubmit }) => {
 					type="text"
 					placeholder="Description"
 					name="description"
+					id="expenseDescription"
 					autoFocus
 					value={formState.description}
 					onChange={handleInputChange}
@@ -84,6 +85,7 @@ const ExpenseForm: FC<Props> = ({ expense, onSubmit }) => {
 					type="text"
 					placeholder="Amount"
 					name="amount"
+					id="expenseAmount"
 					value={formState.amount || ''}
 					onChange={handleAmountChange}
 				/>
@@ -100,6 +102,7 @@ const ExpenseForm: FC<Props> = ({ expense, onSubmit }) => {
 				<input
 					type="text"
 					name="note"
+					id="expenseNote"
 					placeholder="Add a not for your expense (optional)"
 					value={formState.note}
 					onChange={handleInputChange}
@@ -116,3 +119,5 @@ const StyledForm = styled.form`
 	display: flex;
 	flex-flow: column;
 `
+
+StyledForm.displayName = 'StyledForm'
