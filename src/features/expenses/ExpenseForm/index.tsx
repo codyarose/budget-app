@@ -2,11 +2,10 @@ import React, { FC, useState, ChangeEvent, FormEvent } from 'react'
 import styled from 'styled-components'
 import moment, { Moment } from 'moment'
 import { SingleDatePicker } from 'react-dates'
-import 'react-dates/lib/css/_datepicker.css'
 import 'react-dates/initialize'
 
-import { Expense, ExpenseData } from './expensesSlice'
-import Error from '../../components/Error'
+import { Expense, ExpenseData } from '../expensesSlice'
+import Error from '../../../components/Error'
 
 interface Props {
 	expense?: Expense

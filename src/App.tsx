@@ -1,5 +1,6 @@
 import React, { FC } from 'react'
 import { ThemeProvider } from 'styled-components'
+import 'react-dates/lib/css/_datepicker.css'
 
 import theme from './theme'
 import { GlobalStyles } from './theme/globalStyles'
