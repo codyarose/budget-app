@@ -4,8 +4,9 @@ import {
 	selectExpenses,
 	editExpense,
 	removeExpense,
-} from '../features/expenses/expensesSlice'
-import ExpenseForm from '../features/expenses/ExpenseForm'
+	ExpenseData,
+} from '../../features/expenses/expensesSlice'
+import ExpenseForm from '../../features/expenses/ExpenseForm'
 import { RouteComponentProps } from 'react-router-dom'
 
 interface Props {
@@ -27,23 +28,20 @@ const EditExpensePage: FC<Props & RouteComponentProps> = ({
 
 	const expenseToEdit = expenses.find((expense) => expense.id === id)
 
+	const handleSubmit = (editedExpense: ExpenseData) => {
+		dispatch(editExpense({ editedExpense, id }))
+		history.push('/')
+	}
+
+	const handleRemove = () => {
+		dispatch(removeExpense(id))
+		history.push('/')
+	}
+
 	return (
 		<div>
-			<ExpenseForm
-				expense={expenseToEdit}
-				onSubmit={(editedExpense) => {
-					dispatch(editExpense({ editedExpense, id }))
-					history.push('/')
-				}}
-			/>
-			<button
-				onClick={() => {
-					dispatch(removeExpense(id))
-					history.push('/')
-				}}
-			>
-				Remove
-			</button>
+			<ExpenseForm expense={expenseToEdit} onSubmit={handleSubmit} />
+			<button onClick={handleRemove}>Remove</button>
 		</div>
 	)
 }
