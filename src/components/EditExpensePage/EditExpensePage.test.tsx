@@ -14,21 +14,19 @@ jest.mock('react-redux', () => ({
 	useDispatch: jest.fn(),
 	useSelector: jest.fn().mockImplementation((selector) => selector()),
 }))
-jest.mock('../../features/expenses/expensesSlice', () => {
-	return {
-		selectExpenses: jest.fn().mockReturnValue([
-			{
-				id: '123abc',
-				description: 'Title',
-				note: '',
-				amount: 140500,
-				createdAt: 1598763926001,
-			},
-		]),
-		editExpense: jest.fn(),
-		removeExpense: jest.fn(),
-	}
-})
+jest.mock('../../features/expenses/expensesSlice', () => ({
+	selectExpenses: jest.fn().mockReturnValue([
+		{
+			id: '123abc',
+			description: 'Title',
+			note: '',
+			amount: 140500,
+			createdAt: 1598763926001,
+		},
+	]),
+	editExpense: jest.fn(),
+	removeExpense: jest.fn(),
+}))
 
 describe('EditExpensePage', () => {
 	const useDispatchSpy = jest.spyOn(redux, 'useDispatch')
