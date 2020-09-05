@@ -10,9 +10,12 @@ exports[`ExpenseListItem component should render correctly with expense data 1`]
     </h4>
   </Link>
   <p>
-    2650
-     - 
-    1598763926009
+    $26.50
+    -
+    August 30th, 2020
+  </p>
+  <p>
+    This is a note
   </p>
 </div>
 `;
