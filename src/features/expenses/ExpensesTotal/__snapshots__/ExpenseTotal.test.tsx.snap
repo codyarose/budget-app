@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ExpenseTotal should not render if there are no expenses 1`] = `<Fragment />`;
+
+exports[`ExpenseTotal should render correct cound and total with multiple expenses 1`] = `
+<Fragment>
+  <div>
+    Showing 
+    3
+     
+    expenses
+     totalling 
+    $4,832.48
+  </div>
+</Fragment>
+`;
+
+exports[`ExpenseTotal should render correct cound and total with one expense 1`] = `
+<Fragment>
+  <div>
+    Showing 
+    1
+     
+    expense
+     totalling 
+    $1,405.00
+  </div>
+</Fragment>
+`;
