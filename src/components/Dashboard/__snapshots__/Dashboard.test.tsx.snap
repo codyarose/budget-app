@@ -2,7 +2,37 @@
 
 exports[`Dashboard component should render correctly 1`] = `
 <div>
+  <ExpenseTotal
+    count={3}
+    total={483248}
+  />
   <ExpenseListFilter />
-  <ExpenseList />
+  <ExpenseList
+    expenses={
+      Array [
+        Object {
+          "amount": 140500,
+          "createdAt": 1598763926001,
+          "description": "Title",
+          "id": "123abc",
+          "note": "",
+        },
+        Object {
+          "amount": 2650,
+          "createdAt": 1598763926009,
+          "description": "Blah",
+          "id": "456def",
+          "note": "This is a note",
+        },
+        Object {
+          "amount": 340098,
+          "createdAt": 1598763926345,
+          "description": "Another one",
+          "id": "789ghi",
+          "note": "Text goes here",
+        },
+      ]
+    }
+  />
 </div>
 `;
