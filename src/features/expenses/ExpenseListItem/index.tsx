@@ -7,6 +7,7 @@ const ExpenseListItem: FC<Expense> = ({
 	description,
 	amount,
 	createdAt,
+	note,
 	id,
 }) => {
 	return (
@@ -17,6 +18,7 @@ const ExpenseListItem: FC<Expense> = ({
 			<p>
 				{amount} - {createdAt}
 			</p>
+			{note && <p>{note}</p>}
 		</div>
 	)
 }
