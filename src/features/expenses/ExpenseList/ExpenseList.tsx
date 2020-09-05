@@ -1,11 +1,12 @@
 import React, { FC } from 'react'
 import ExpenseListItem from '../ExpenseListItem'
-import { useSelector } from 'react-redux'
-import { selectVisibleExpenses } from '../expensesSlice'
+import { Expense } from '../expensesSlice'
 
-const ExpenseList: FC = () => {
-	const expenses = useSelector(selectVisibleExpenses)
+interface Props {
+	expenses: Expense[]
+}
 
+const ExpenseList: FC<Props> = ({ expenses }) => {
 	return (
 		<div>
 			{expenses.length === 0 ? (
