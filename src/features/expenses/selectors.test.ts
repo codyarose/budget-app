@@ -1,7 +1,15 @@
 import moment from 'moment'
 
-import { selectExpenses, selectVisibleExpenses } from './expensesSlice'
-import { initialState as FilterInitialState } from '../filter/filterSlice'
+import {
+	selectExpenses,
+	selectVisibleExpenses,
+	selectTotal,
+	Expense,
+} from './expensesSlice'
+import {
+	initialState as FilterInitialState,
+	FilterState,
+} from '../filter/filterSlice'
 
 describe('expense selectors', () => {
 	const expensesMockData = [
@@ -28,20 +36,15 @@ describe('expense selectors', () => {
 		},
 	]
 
-	const state = {
-		expenses: expensesMockData,
-		filter: {
-			...FilterInitialState,
-			startDate: moment(0).startOf('month').valueOf(),
-			endDate: moment(0).endOf('month').valueOf(),
-		},
-	}
-
+	let state: { expenses: Expense[]; filter: FilterState }
 	beforeEach(() => {
-		state.filter = {
-			...FilterInitialState,
-			startDate: moment(0).startOf('month').valueOf(),
-			endDate: moment(0).endOf('month').valueOf(),
+		state = {
+			expenses: expensesMockData,
+			filter: {
+				...FilterInitialState,
+				startDate: moment(0).startOf('month').valueOf(),
+				endDate: moment(0).endOf('month').valueOf(),
+			},
 		}
 	})
 
@@ -97,5 +100,22 @@ describe('expense selectors', () => {
 			expensesMockData[2],
 			expensesMockData[0],
 		])
+	})
+
+	describe('selectTotal', () => {
+		it('should return 0 if no expenses', () => {
+			state.expenses = []
+			expect(selectTotal(state)).toEqual(0)
+		})
+
+		it('should correctly add up a single expense', () => {
+			const expense = expensesMockData[1]
+			state.expenses = [expense]
+			expect(selectTotal(state)).toEqual(expense.amount)
+		})
+
+		it('should correctly add up multiple expenses', () => {
+			expect(selectTotal(state)).toEqual(164300)
+		})
 	})
 })

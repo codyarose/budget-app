@@ -104,4 +104,14 @@ export const selectVisibleExpenses = (state: RootState): Expense[] => {
 		})
 }
 
+export const selectTotal = (state: RootState): number => {
+	const expenses = selectVisibleExpenses(state)
+
+	if (!expenses.length) return 0
+
+	return expenses.reduce((acc, expense) => {
+		return acc + expense.amount
+	}, 0)
+}
+
 export default expensesSlice.reducer
