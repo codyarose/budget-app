@@ -7,6 +7,14 @@ import ExpenseForm from '../../features/expenses/ExpenseForm'
 import expenses from '../../features/expenses/fixtures'
 import { addExpense } from '../../features/expenses/expensesSlice'
 
+jest.mock('react-redux', () => ({
+	useDispatch: jest.fn(),
+	useSelector: jest.fn().mockImplementation((selector) => selector()),
+}))
+jest.mock('../../features/expenses/expensesSlice', () => ({
+	addExpense: jest.fn(),
+}))
+
 describe('AddExpensePage', () => {
 	const useDispatchSpy = jest.spyOn(redux, 'useDispatch')
 	const mockDispatchFn = jest.fn()
@@ -29,9 +37,6 @@ describe('AddExpensePage', () => {
 		wrapper.find(ExpenseForm).prop('onSubmit')(expenses[1])
 
 		expect(props.history.push).toHaveBeenLastCalledWith('/')
-		expect(mockDispatchFn).toHaveBeenLastCalledWith({
-			payload: expenses[1],
-			type: addExpense.type,
-		})
+		expect(addExpense).toHaveBeenLastCalledWith(expenses[1])
 	})
 })
