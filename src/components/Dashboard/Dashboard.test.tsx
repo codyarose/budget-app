@@ -9,6 +9,7 @@ import {
 import expenses from '../../features/expenses/fixtures'
 
 jest.mock('react-redux', () => ({
+	useDispatch: jest.fn(),
 	useSelector: jest.fn((fn) => fn()),
 }))
 jest.mock('../../features/expenses/expensesSlice')
