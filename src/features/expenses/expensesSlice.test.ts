@@ -13,6 +13,7 @@ import expenses, {
 	removeExpense,
 	selectExpenses,
 	ExpenseData,
+	setExpenses,
 } from './expensesSlice'
 import { initialState as initialFilterState } from '../filter/filterSlice'
 import db from '../../firebase/firebase'
@@ -105,6 +106,14 @@ describe('expenses reducer', () => {
 			.once('value')
 
 		expect((await snapshot).val()).toEqual(data)
+	})
+
+	it('should fetch expenses from firebase', async () => {
+		const store = mockStore({})
+		await store.dispatch<any>(setExpenses())
+		const actions = store.getActions()
+
+		expect(actions[1].payload).toEqual(mockExpenses)
 	})
 
 	it('should edit an expense', () => {

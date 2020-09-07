@@ -41,6 +41,26 @@ export const addExpense = createAsyncThunk<Expense, ExpenseData>(
 	},
 )
 
+export const setExpenses = createAsyncThunk(
+	'expenses/setExpenses',
+	async (_, { rejectWithValue }) => {
+		try {
+			const expenses: Expense[] = []
+			await db.ref('expenses').once('value', (snapshot) => {
+				snapshot.forEach((data) => {
+					expenses.push({
+						id: data.key,
+						...data.val(),
+					})
+				})
+			})
+			return expenses
+		} catch (error) {
+			rejectWithValue(error)
+		}
+	},
+)
+
 export const expensesSlice = createSlice({
 	name: 'expenses',
 	initialState,
@@ -77,6 +97,9 @@ export const expensesSlice = createSlice({
 	extraReducers: (builder) => {
 		builder.addCase(addExpense.fulfilled, (state, action) => {
 			state.push(action.payload)
+		})
+		builder.addCase(setExpenses.fulfilled, (_state, action) => {
+			return action.payload
 		})
 	},
 })
