@@ -1,9 +1,9 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { v4 as uuid } from 'uuid'
+import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
 import { Moment } from 'moment'
 
 import { RootState } from '../../app/store'
 import moment from 'moment'
+import db from '../../firebase/firebase'
 
 export interface Expense {
 	id: string
@@ -17,25 +17,34 @@ export type ExpenseData = Omit<Expense, 'id'>
 
 export const initialState: Expense[] = []
 
-export const expensesSlice = createSlice({
-	name: 'expenses',
-	initialState,
-	reducers: {
-		addExpense: (state, action: PayloadAction<Partial<ExpenseData>>) => {
+export const addExpense = createAsyncThunk<Expense, ExpenseData>(
+	'expenses/addExpense',
+	async (expenseData, { rejectWithValue }) => {
+		try {
 			const {
 				description = '',
 				note = '',
 				amount = 0,
 				createdAt = 0,
-			} = action.payload
-			state.push({
-				id: uuid(),
-				description,
-				note,
-				amount,
-				createdAt,
-			})
-		},
+			} = expenseData
+			const expense = { description, note, amount, createdAt }
+
+			const response = await db.ref('expenses').push(expense)
+
+			return {
+				id: response.key || '',
+				...expense,
+			}
+		} catch (error) {
+			return rejectWithValue(error)
+		}
+	},
+)
+
+export const expensesSlice = createSlice({
+	name: 'expenses',
+	initialState,
+	reducers: {
 		removeExpense: (state, action: PayloadAction<string>) => {
 			const id = action.payload
 			const index = state.findIndex((expense) => expense.id === id)
@@ -65,9 +74,14 @@ export const expensesSlice = createSlice({
 			})
 		},
 	},
+	extraReducers: (builder) => {
+		builder.addCase(addExpense.fulfilled, (state, action) => {
+			state.push(action.payload)
+		})
+	},
 })
 
-export const { addExpense, removeExpense, editExpense } = expensesSlice.actions
+export const { removeExpense, editExpense } = expensesSlice.actions
 
 export const selectExpenses = (state: RootState): Expense[] => state.expenses
 

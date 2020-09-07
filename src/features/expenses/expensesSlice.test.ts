@@ -67,7 +67,8 @@ describe('expenses reducer', () => {
 			amount: 99930,
 			createdAt: 1598763926666,
 		}
-		const nextState = expenses(mockData, addExpense(data))
+		const action = { type: addExpense.fulfilled.type, payload: data }
+		const nextState = expenses(mockData, action)
 
 		const rootState = { expenses: nextState, filter: initialFilterState }
 		expect(selectExpenses(rootState)).toEqual([...mockData, data])
