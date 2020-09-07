@@ -61,19 +61,22 @@ export const setExpenses = createAsyncThunk(
 	},
 )
 
+export const removeExpense = createAsyncThunk(
+	'expenses/removeExpense',
+	async (id: string, { rejectWithValue }) => {
+		try {
+			await db.ref(`expenses/${id}`).remove()
+			return id
+		} catch (error) {
+			rejectWithValue(error)
+		}
+	},
+)
+
 export const expensesSlice = createSlice({
 	name: 'expenses',
 	initialState,
 	reducers: {
-		removeExpense: (state, action: PayloadAction<string>) => {
-			const id = action.payload
-			const index = state.findIndex((expense) => expense.id === id)
-			if (index === -1) {
-				return state
-			} else {
-				state.splice(index, 1)
-			}
-		},
 		editExpense: (
 			state,
 			action: PayloadAction<{
@@ -101,10 +104,19 @@ export const expensesSlice = createSlice({
 		builder.addCase(setExpenses.fulfilled, (_state, action) => {
 			return action.payload
 		})
+		builder.addCase(removeExpense.fulfilled, (state, action) => {
+			const id = action.payload
+			const index = state.findIndex((expense) => expense.id === id)
+			if (index === -1) {
+				return state
+			} else {
+				state.splice(index, 1)
+			}
+		})
 	},
 })
 
-export const { removeExpense, editExpense } = expensesSlice.actions
+export const { editExpense } = expensesSlice.actions
 
 export const selectExpenses = (state: RootState): Expense[] => state.expenses
 

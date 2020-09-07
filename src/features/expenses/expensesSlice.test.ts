@@ -62,18 +62,29 @@ describe('expenses reducer', () => {
 		expect(nextState).toEqual(result)
 	})
 
-	it('should remove expense by id', () => {
-		const nextState = expenses(mockData, removeExpense(mockData[1].id))
+	it('should remove expense by id from redux and firebase', async () => {
+		const id = mockExpenses[1].id
+		const store = mockStore({})
+		store.dispatch<any>(removeExpense(id))
+		const snapshot = await db.ref(`expenses/${id}`).once('value')
+		expect(snapshot.val()).toBeFalsy()
 
+		const action = { type: removeExpense.fulfilled.type, payload: id }
+		const nextState = expenses(mockExpenses, action)
 		const rootState = { expenses: nextState, filter: initialFilterState }
-		expect(selectExpenses(rootState)).toEqual([mockData[0], mockData[2]])
+		expect(selectExpenses(rootState)).toEqual([
+			mockExpenses[0],
+			mockExpenses[2],
+		])
 	})
 
 	it('should not remove expense if id not found', () => {
-		const nextState = expenses(mockData, removeExpense('-1'))
+		const id = 'invalidId'
+		const action = { type: removeExpense.fulfilled.type, payload: id }
+		const nextState = expenses(mockExpenses, action)
 
 		const rootState = { expenses: nextState, filter: initialFilterState }
-		expect(selectExpenses(rootState)).toEqual(mockData)
+		expect(selectExpenses(rootState)).toEqual(mockExpenses)
 	})
 
 	it('should add expense', () => {

@@ -18,7 +18,6 @@ const Dashboard: FC = () => {
 
 	useEffect(() => {
 		dispatch(setExpenses())
-		console.log('ran')
 	}, [dispatch])
 
 	return (
