@@ -1,5 +1,8 @@
 jest.mock('uuid')
 import { v4 } from 'uuid'
+import thunk from 'redux-thunk'
+
+import configureMockStore from 'redux-mock-store'
 
 const mockedUuid = v4 as jest.Mocked<typeof v4>
 
@@ -9,8 +12,21 @@ import expenses, {
 	editExpense,
 	removeExpense,
 	selectExpenses,
+	ExpenseData,
 } from './expensesSlice'
 import { initialState as initialFilterState } from '../filter/filterSlice'
+import db from '../../firebase/firebase'
+import mockExpenses from './fixtures'
+
+const mockStore = configureMockStore([thunk])
+
+beforeEach(async () => {
+	const expensesData: { [key: string]: ExpenseData } = {}
+	mockExpenses.forEach(({ id, description, note, amount, createdAt }) => {
+		expensesData[id] = { description, note, amount, createdAt }
+	})
+	await db.ref('expenses').set(expensesData)
+})
 
 describe('expenses reducer', () => {
 	const mockData = [
@@ -72,6 +88,23 @@ describe('expenses reducer', () => {
 
 		const rootState = { expenses: nextState, filter: initialFilterState }
 		expect(selectExpenses(rootState)).toEqual([...mockData, data])
+	})
+
+	it('should add expense to store and database', async () => {
+		const data = {
+			description: 'From test',
+			note: 'note text',
+			amount: 112233,
+			createdAt: 1234567890,
+		}
+		const store = mockStore({})
+		await store.dispatch<any>(addExpense(data))
+		const actions = store.getActions()
+		const snapshot = db
+			.ref(`expenses/${actions[1].payload.id}`)
+			.once('value')
+
+		expect((await snapshot).val()).toEqual(data)
 	})
 
 	it('should edit an expense', () => {
