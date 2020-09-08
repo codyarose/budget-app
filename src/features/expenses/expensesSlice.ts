@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { Moment } from 'moment'
 
 import { RootState } from '../../app/store'
@@ -73,30 +73,34 @@ export const removeExpense = createAsyncThunk(
 	},
 )
 
+export const editExpense = createAsyncThunk(
+	'expenses/editExpense',
+	async (
+		{
+			editedExpense,
+			id,
+		}: { editedExpense: Partial<ExpenseData>; id: string },
+		{ rejectWithValue },
+	) => {
+		try {
+			const docRef = db.ref(`expenses/${id}`)
+			const snapshot = await docRef.once('value')
+			if (snapshot.exists()) {
+				await docRef.set({
+					...editedExpense,
+				})
+			}
+			return { editedExpense, id }
+		} catch (error) {
+			rejectWithValue(error)
+		}
+	},
+)
+
 export const expensesSlice = createSlice({
 	name: 'expenses',
 	initialState,
-	reducers: {
-		editExpense: (
-			state,
-			action: PayloadAction<{
-				editedExpense: Partial<ExpenseData>
-				id: string
-			}>,
-		) => {
-			const { editedExpense, id } = action.payload
-			return state.map((expense) => {
-				if (expense.id === id) {
-					return {
-						...expense,
-						...editedExpense,
-					}
-				} else {
-					return expense
-				}
-			})
-		},
-	},
+	reducers: {},
 	extraReducers: (builder) => {
 		builder.addCase(addExpense.fulfilled, (state, action) => {
 			state.push(action.payload)
@@ -113,10 +117,20 @@ export const expensesSlice = createSlice({
 				state.splice(index, 1)
 			}
 		})
+		builder.addCase(editExpense.fulfilled, (state, action) => {
+			state.map((expense) => {
+				if (expense.id === action.payload?.id) {
+					return {
+						...expense,
+						...action.payload?.editedExpense,
+					}
+				} else {
+					return expense
+				}
+			})
+		})
 	},
 })
-
-export const { editExpense } = expensesSlice.actions
 
 export const selectExpenses = (state: RootState): Expense[] => state.expenses
 

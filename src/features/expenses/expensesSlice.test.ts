@@ -127,40 +127,31 @@ describe('expenses reducer', () => {
 		expect(actions[1].payload).toEqual(mockExpenses)
 	})
 
-	it('should edit an expense', () => {
-		const data = {
-			editedExpense: {
-				description: 'New Blah',
-				note: 'Changed note',
-				amount: 666420,
-				createdAt: 1598763926009,
-			},
-			id: mockData[1].id,
+	it('should edit expense from firebase', async () => {
+		const store = mockStore({})
+		const expense = mockExpenses[2]
+		const updates = {
+			description: 'Edited description',
+			amount: 1122334455,
+			note: 'Edited note',
 		}
+		await store.dispatch<any>(
+			editExpense({ editedExpense: updates, id: expense.id }),
+		)
+		const snapshot = db.ref(`expenses/${expense.id}`).once('value')
 
-		const nextState = expenses(mockData, editExpense(data))
-
-		const newMockData = mockData.slice()
-		newMockData[1] = {
-			id: data.id,
-			...data.editedExpense,
-		}
-
-		const rootState = { expenses: nextState, filter: initialFilterState }
-		expect(selectExpenses(rootState)).toEqual(newMockData)
+		expect((await snapshot).val()).toEqual(updates)
 	})
 
-	it('should not edit expense if expense not found', () => {
-		const data = {
-			editedExpense: {
-				amount: 10,
-			},
-			id: 'invalid id',
+	it('should not edit expense if expense not found', async () => {
+		const store = mockStore({})
+		const updates = {
+			amount: 1,
 		}
+		const id = 'invalidID'
+		await store.dispatch<any>(editExpense({ editedExpense: updates, id }))
+		const snapshot = db.ref(`expenses/${id}`).once('value')
 
-		const nextState = expenses(mockData, editExpense(data))
-
-		const rootState = { expenses: nextState, filter: initialFilterState }
-		expect(selectExpenses(rootState)).toEqual(mockData)
+		expect((await snapshot).val()).toBeFalsy()
 	})
 })
