@@ -5,9 +5,10 @@ import { RootState } from '../../app/store'
 
 export const loginUser = createAsyncThunk('auth/loginUser', async () => {
 	try {
-		await firebase.auth().signInWithPopup(googleAuthProvider)
+		const login = await firebase.auth().signInWithPopup(googleAuthProvider)
+		return login.user?.uid
 	} catch (error) {
-		console.log('Error', error)
+		console.log(error)
 	}
 })
 
@@ -22,11 +23,13 @@ export const logoutUser = createAsyncThunk('auth/logoutUser', async () => {
 export interface AuthState {
 	isAuthed: boolean
 	isLoading: boolean
+	uid: string
 }
 
 export const initialState: AuthState = {
 	isAuthed: false,
 	isLoading: false,
+	uid: '',
 }
 
 export const authSlice = createSlice({
@@ -37,19 +40,22 @@ export const authSlice = createSlice({
 		builder.addCase(loginUser.pending, (state) => {
 			state.isLoading = true
 		})
-		builder.addCase(loginUser.fulfilled, (state) => {
+		builder.addCase(loginUser.fulfilled, (state, action) => {
 			state.isAuthed = true
 			state.isLoading = false
+			const uid = action.payload || ''
+			state.uid = uid
 		})
 		builder.addCase(loginUser.rejected, (state) => {
 			state.isLoading = false
 		})
-		builder.addCase(logoutUser.fulfilled, (state) => {
-			state.isAuthed = false
+		builder.addCase(logoutUser.fulfilled, () => {
+			return initialState
 		})
 	},
 })
 
 export const selectIsAuthed = (state: RootState): boolean => state.auth.isAuthed
+export const selectUid = (state: RootState): string => state.auth.uid
 
 export default authSlice.reducer
