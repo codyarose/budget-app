@@ -1,6 +1,6 @@
 jest.mock('uuid')
 import { v4 } from 'uuid'
-import thunk from 'redux-thunk'
+import thunk, { ThunkDispatch } from 'redux-thunk'
 
 import configureMockStore from 'redux-mock-store'
 
@@ -16,10 +16,20 @@ import expenses, {
 	setExpenses,
 } from './expensesSlice'
 import { initialState as initialFilterState } from '../filter/filterSlice'
+import { initialState as initialAuthState } from '../auth/authSlice'
 import db from '../../firebase/firebase'
 import mockExpenses from './fixtures'
+import { RootState } from '../../app/store'
+import { AnyAction } from '@reduxjs/toolkit'
 
-const mockStore = configureMockStore([thunk])
+type DispatchExts = ThunkDispatch<RootState, void, AnyAction>
+
+const mockStore = configureMockStore<RootState, DispatchExts>([thunk])
+const rootState = {
+	expenses: initialState,
+	filter: initialFilterState,
+	auth: initialAuthState,
+}
 
 beforeEach(async () => {
 	const expensesData: { [key: string]: ExpenseData } = {}
@@ -64,14 +74,14 @@ describe('expenses reducer', () => {
 
 	it('should remove expense by id from redux and firebase', async () => {
 		const id = mockExpenses[1].id
-		const store = mockStore({})
-		store.dispatch<any>(removeExpense(id))
+		const store = mockStore(rootState)
+		store.dispatch(removeExpense(id))
 		const snapshot = await db.ref(`expenses/${id}`).once('value')
 		expect(snapshot.val()).toBeFalsy()
 
 		const action = { type: removeExpense.fulfilled.type, payload: id }
 		const nextState = expenses(mockExpenses, action)
-		const rootState = { expenses: nextState, filter: initialFilterState }
+		rootState.expenses = nextState
 		expect(selectExpenses(rootState)).toEqual([
 			mockExpenses[0],
 			mockExpenses[2],
@@ -83,7 +93,7 @@ describe('expenses reducer', () => {
 		const action = { type: removeExpense.fulfilled.type, payload: id }
 		const nextState = expenses(mockExpenses, action)
 
-		const rootState = { expenses: nextState, filter: initialFilterState }
+		rootState.expenses = nextState
 		expect(selectExpenses(rootState)).toEqual(mockExpenses)
 	})
 
@@ -98,7 +108,7 @@ describe('expenses reducer', () => {
 		const action = { type: addExpense.fulfilled.type, payload: data }
 		const nextState = expenses(mockData, action)
 
-		const rootState = { expenses: nextState, filter: initialFilterState }
+		rootState.expenses = nextState
 		expect(selectExpenses(rootState)).toEqual([...mockData, data])
 	})
 
@@ -109,8 +119,8 @@ describe('expenses reducer', () => {
 			amount: 112233,
 			createdAt: 1234567890,
 		}
-		const store = mockStore({})
-		await store.dispatch<any>(addExpense(data))
+		const store = mockStore(rootState)
+		await store.dispatch(addExpense(data))
 		const actions = store.getActions()
 		const snapshot = db
 			.ref(`expenses/${actions[1].payload.id}`)
@@ -120,22 +130,22 @@ describe('expenses reducer', () => {
 	})
 
 	it('should fetch expenses from firebase', async () => {
-		const store = mockStore({})
-		await store.dispatch<any>(setExpenses())
+		const store = mockStore(rootState)
+		await store.dispatch(setExpenses())
 		const actions = store.getActions()
 
 		expect(actions[1].payload).toEqual(mockExpenses)
 	})
 
 	it('should edit expense from firebase', async () => {
-		const store = mockStore({})
+		const store = mockStore(rootState)
 		const expense = mockExpenses[2]
 		const updates = {
 			description: 'Edited description',
 			amount: 1122334455,
 			note: 'Edited note',
 		}
-		await store.dispatch<any>(
+		await store.dispatch(
 			editExpense({ editedExpense: updates, id: expense.id }),
 		)
 		const snapshot = db.ref(`expenses/${expense.id}`).once('value')
@@ -144,12 +154,12 @@ describe('expenses reducer', () => {
 	})
 
 	it('should not edit expense if expense not found', async () => {
-		const store = mockStore({})
+		const store = mockStore(rootState)
 		const updates = {
 			amount: 1,
 		}
 		const id = 'invalidID'
-		await store.dispatch<any>(editExpense({ editedExpense: updates, id }))
+		await store.dispatch(editExpense({ editedExpense: updates, id }))
 		const snapshot = db.ref(`expenses/${id}`).once('value')
 
 		expect((await snapshot).val()).toBeFalsy()

@@ -12,6 +12,15 @@ import filter, {
 } from './filterSlice'
 import moment from 'moment'
 
+import { initialState as initialExpensesState } from '../expenses/expensesSlice'
+import { initialState as initialAuthState } from '../auth/authSlice'
+
+const rootState = {
+	expenses: initialExpensesState,
+	filter: initialState,
+	auth: initialAuthState,
+}
+
 describe('filter reducer', () => {
 	it('should handle initial state', () => {
 		const nextState = filter(undefined, { type: '@@INIT' })
@@ -26,7 +35,7 @@ describe('filter reducer', () => {
 
 		const nextState = filter(initialState, setStartDate(data))
 
-		const rootState = { expenses: [], filter: nextState }
+		rootState.filter = nextState
 		expect(selectStartDate(rootState)).toEqual(data)
 	})
 
@@ -35,7 +44,7 @@ describe('filter reducer', () => {
 
 		const nextState = filter(initialState, setEndDate(data))
 
-		const rootState = { expenses: [], filter: nextState }
+		rootState.filter = nextState
 		expect(selectEndDate(rootState)).toEqual(data)
 	})
 
@@ -47,14 +56,14 @@ describe('filter reducer', () => {
 
 		const nextState = filter(data, sortByDate())
 
-		const rootState = { expenses: [], filter: nextState }
+		rootState.filter = nextState
 		expect(selectSortBy(rootState)).toBe('date')
 	})
 
 	it('should set sortBy to amount', () => {
 		const nextState = filter(initialState, sortByAmount())
 
-		const rootState = { expenses: [], filter: nextState }
+		rootState.filter = nextState
 		expect(selectSortBy(rootState)).toBe('amount')
 	})
 
@@ -63,7 +72,7 @@ describe('filter reducer', () => {
 
 		const nextState = filter(initialState, setTextFilter(text))
 
-		const rootState = { expenses: [], filter: nextState }
+		rootState.filter = nextState
 		expect(selectText(rootState)).toBe(text)
 	})
 })
