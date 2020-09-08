@@ -18,5 +18,10 @@ exports[`Header component should render correctly 1`] = `
   >
     Create
   </Styled(NavLink)>
+  <button
+    onClick={[Function]}
+  >
+    Logout
+  </button>
 </header>
 `;
