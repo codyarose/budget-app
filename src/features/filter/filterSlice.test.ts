@@ -21,7 +21,7 @@ const rootState = {
 	auth: initialAuthState,
 }
 
-describe('filter reducer', () => {
+describe('filterSlice', () => {
 	it('should handle initial state', () => {
 		const nextState = filter(undefined, { type: '@@INIT' })
 

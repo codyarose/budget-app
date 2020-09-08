@@ -14,7 +14,7 @@ const rootState = {
 	auth: initialState,
 }
 
-describe('auth reducer', () => {
+describe('authSlice', () => {
 	it('should log in', () => {
 		const uid = 'testUid'
 		const action = { type: loginUser.fulfilled.type, payload: uid }

@@ -39,7 +39,7 @@ beforeEach(async () => {
 	await db.ref('expenses').set(expensesData)
 })
 
-describe('expenses reducer', () => {
+describe('expensesSlice', () => {
 	const mockData = [
 		{
 			id: '123abc',
