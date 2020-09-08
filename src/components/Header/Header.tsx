@@ -1,12 +1,13 @@
 import React, { FC } from 'react'
 import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { logoutUser } from '../../features/auth/authSlice'
+import { logoutUser, selectIsAuthed } from '../../features/auth/authSlice'
 
 const Header: FC = () => {
 	const dispatch = useDispatch()
+	const isAuthed = useSelector(selectIsAuthed)
 
 	const handleLogout = () => {
 		dispatch(logoutUser())
@@ -20,7 +21,7 @@ const Header: FC = () => {
 			<StyledNavLink to="/create" activeClassName="is-active">
 				Create
 			</StyledNavLink>
-			<button onClick={handleLogout}>Logout</button>
+			{isAuthed && <button onClick={handleLogout}>Logout</button>}
 		</header>
 	)
 }

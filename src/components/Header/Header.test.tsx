@@ -3,14 +3,13 @@ import { shallow, ShallowWrapper } from 'enzyme'
 import * as redux from 'react-redux'
 
 import Header from './index'
-import { logoutUser } from '../../features/auth/authSlice'
+import { logoutUser, selectIsAuthed } from '../../features/auth/authSlice'
 
 jest.mock('react-redux', () => ({
 	useDispatch: jest.fn(),
+	useSelector: jest.fn((fn) => fn()),
 }))
-jest.mock('../../features/auth/authSlice', () => ({
-	logoutUser: jest.fn(),
-}))
+jest.mock('../../features/auth/authSlice')
 
 const useDispatchSpy = jest.spyOn(redux, 'useDispatch')
 const mockDispatchFn = jest.fn()
@@ -22,12 +21,24 @@ beforeEach(() => {
 })
 
 describe('Header component', () => {
-	it('should render correctly', () => {
+	it('should render correctly when logged out', () => {
+		;(selectIsAuthed as jest.Mock).mockReturnValue(false)
+		wrapper.setProps({})
+
+		expect(wrapper).toMatchSnapshot()
+	})
+
+	it('should render correctly when logged in', () => {
+		;(selectIsAuthed as jest.Mock).mockReturnValue(true)
+		wrapper.setProps({})
+
 		expect(wrapper).toMatchSnapshot()
 	})
 
 	it('should call logoutUser on button click', () => {
+		;(selectIsAuthed as jest.Mock).mockReturnValueOnce(true)
 		wrapper.find('button').simulate('click')
+		wrapper.setProps({})
 
 		expect(logoutUser).toHaveBeenCalled()
 	})
