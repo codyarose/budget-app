@@ -6,13 +6,15 @@ import AddExpensePage from '../components/AddExpensePage'
 import EditExpensePage from '../components/EditExpensePage'
 import FourOhFourPage from '../components/FourOhFourPage'
 import Header from '../components/Header'
+import LoginPage from '../components/LoginPage'
 
 const AppRouter: FC = () => {
 	return (
 		<BrowserRouter>
 			<Header />
 			<Switch>
-				<Route exact path="/" component={Dashboard} />
+				<Route exact path="/" component={LoginPage} />
+				<Route exact path="/dashboard" component={Dashboard} />
 				<Route exact path="/create" component={AddExpensePage} />
 				<Route exact path="/edit/:id" component={EditExpensePage} />
 				<Route component={FourOhFourPage} />
