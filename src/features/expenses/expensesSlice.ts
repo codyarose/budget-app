@@ -19,7 +19,7 @@ export type ExpenseData = Omit<Expense, 'id' | 'user'>
 export const initialState: Expense[] = []
 
 const authUser = localStorage.getItem('authUser')
-const uid = authUser && JSON.parse(authUser).uid
+const uid: string = authUser && JSON.parse(authUser).uid
 
 export const addExpense = createAsyncThunk<Expense, ExpenseData>(
 	'expenses/addExpense',
