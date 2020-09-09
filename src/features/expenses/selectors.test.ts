@@ -10,6 +10,7 @@ import {
 	initialState as FilterInitialState,
 	FilterState,
 } from '../filter/filterSlice'
+import { initialState as initialAuthState, AuthState } from '../auth/authSlice'
 
 describe('expense selectors', () => {
 	const expensesMockData = [
@@ -19,6 +20,7 @@ describe('expense selectors', () => {
 			description: 'Internet',
 			note: '',
 			createdAt: moment(0).startOf('month').add(1, 'days').valueOf(),
+			user: 'user1',
 		},
 		{
 			id: '2',
@@ -26,6 +28,7 @@ describe('expense selectors', () => {
 			note: '',
 			amount: 147500,
 			createdAt: moment(0).startOf('month').add(4, 'days').valueOf(),
+			user: 'user2',
 		},
 		{
 			id: '3',
@@ -33,10 +36,11 @@ describe('expense selectors', () => {
 			note: '',
 			amount: 12300,
 			createdAt: moment(0).endOf('month').subtract(10, 'days').valueOf(),
+			user: 'user1',
 		},
 	]
 
-	let state: { expenses: Expense[]; filter: FilterState }
+	let state: { expenses: Expense[]; filter: FilterState; auth: AuthState }
 	beforeEach(() => {
 		state = {
 			expenses: expensesMockData,
@@ -45,6 +49,7 @@ describe('expense selectors', () => {
 				startDate: moment(0).startOf('month').valueOf(),
 				endDate: moment(0).endOf('month').valueOf(),
 			},
+			auth: initialAuthState,
 		}
 	})
 
