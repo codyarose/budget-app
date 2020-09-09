@@ -11,11 +11,15 @@ export interface Expense {
 	note: string
 	amount: number
 	createdAt: Moment | number
+	user: string
 }
 
-export type ExpenseData = Omit<Expense, 'id'>
+export type ExpenseData = Omit<Expense, 'id' | 'user'>
 
 export const initialState: Expense[] = []
+
+const authUser = localStorage.getItem('authUser')
+const uid = authUser && JSON.parse(authUser).uid
 
 export const addExpense = createAsyncThunk<Expense, ExpenseData>(
 	'expenses/addExpense',
@@ -27,7 +31,7 @@ export const addExpense = createAsyncThunk<Expense, ExpenseData>(
 				amount = 0,
 				createdAt = 0,
 			} = expenseData
-			const expense = { description, note, amount, createdAt }
+			const expense = { description, note, amount, createdAt, user: uid }
 
 			const response = await db.ref('expenses').push(expense)
 
@@ -46,14 +50,18 @@ export const setExpenses = createAsyncThunk(
 	async (_, { rejectWithValue }) => {
 		try {
 			const expenses: Expense[] = []
-			await db.ref('expenses').once('value', (snapshot) => {
-				snapshot.forEach((data) => {
-					expenses.push({
-						id: data.key,
-						...data.val(),
+			await db
+				.ref('expenses')
+				.orderByChild('user')
+				.equalTo(uid)
+				.once('value', (snapshot) => {
+					snapshot.forEach((data) => {
+						expenses.push({
+							id: data.key,
+							...data.val(),
+						})
 					})
 				})
-			})
 			return expenses
 		} catch (error) {
 			rejectWithValue(error)
@@ -89,8 +97,8 @@ export const editExpense = createAsyncThunk(
 				await docRef.set({
 					...editedExpense,
 				})
+				return { editedExpense, id }
 			}
-			return { editedExpense, id }
 		} catch (error) {
 			rejectWithValue(error)
 		}
@@ -118,16 +126,12 @@ export const expensesSlice = createSlice({
 			}
 		})
 		builder.addCase(editExpense.fulfilled, (state, action) => {
-			state.map((expense) => {
-				if (expense.id === action.payload?.id) {
-					return {
-						...expense,
-						...action.payload?.editedExpense,
-					}
-				} else {
-					return expense
-				}
-			})
+			const id = action.payload?.id
+			const index = state.findIndex((expense) => expense.id === id)
+			state[index] = {
+				...state[index],
+				...action.payload?.editedExpense,
+			}
 		})
 	},
 })
