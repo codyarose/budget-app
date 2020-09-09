@@ -12,8 +12,8 @@ import expenses, {
 	editExpense,
 	removeExpense,
 	selectExpenses,
-	ExpenseData,
 	setExpenses,
+	Expense,
 } from './expensesSlice'
 import { initialState as initialFilterState } from '../filter/filterSlice'
 import { initialState as initialAuthState } from '../auth/authSlice'
@@ -31,39 +31,19 @@ const rootState = {
 	auth: initialAuthState,
 }
 
+type MockExpense = Omit<Expense, 'id'>
+
 beforeEach(async () => {
-	const expensesData: { [key: string]: ExpenseData } = {}
-	mockExpenses.forEach(({ id, description, note, amount, createdAt }) => {
-		expensesData[id] = { description, note, amount, createdAt }
-	})
+	const expensesData: { [key: string]: MockExpense } = {}
+	mockExpenses.forEach(
+		({ id, description, note, amount, createdAt, user }) => {
+			expensesData[id] = { description, note, amount, createdAt, user }
+		},
+	)
 	await db.ref('expenses').set(expensesData)
 })
 
 describe('expensesSlice', () => {
-	const mockData = [
-		{
-			id: '123abc',
-			description: 'Title',
-			note: '',
-			amount: 140500,
-			createdAt: 1598763926001,
-		},
-		{
-			id: '456def',
-			description: 'Blah',
-			note: 'This is a note',
-			amount: 2650,
-			createdAt: 1598763926009,
-		},
-		{
-			id: '789ghi',
-			description: 'Another one',
-			note: 'Text goes here',
-			amount: 340098,
-			createdAt: 1598763926345,
-		},
-	]
-
 	it('should handle initial state', () => {
 		const nextState = expenses(undefined, { type: '@@INIT' })
 
@@ -104,12 +84,13 @@ describe('expensesSlice', () => {
 			note: 'a note',
 			amount: 99930,
 			createdAt: 1598763926666,
+			user: 'user1',
 		}
 		const action = { type: addExpense.fulfilled.type, payload: data }
-		const nextState = expenses(mockData, action)
+		const nextState = expenses(mockExpenses, action)
 
 		rootState.expenses = nextState
-		expect(selectExpenses(rootState)).toEqual([...mockData, data])
+		expect(selectExpenses(rootState)).toEqual([...mockExpenses, data])
 	})
 
 	it('should add expense to store and database', async () => {

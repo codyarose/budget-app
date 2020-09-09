@@ -4,11 +4,11 @@ import moment, { Moment } from 'moment'
 import { SingleDatePicker } from 'react-dates'
 import 'react-dates/initialize'
 
-import { Expense, ExpenseData } from '../expensesSlice'
+import { ExpenseData } from '../expensesSlice'
 import Error from '../../../components/Error'
 
 interface Props {
-	expense?: Expense
+	expense?: ExpenseData
 	onSubmit: (arg0: ExpenseData) => void
 }
 

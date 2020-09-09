@@ -16,6 +16,7 @@ exports[`Dashboard component should render correctly 1`] = `
           "description": "Title",
           "id": "123abc",
           "note": "",
+          "user": "user1",
         },
         Object {
           "amount": 2650,
@@ -23,6 +24,7 @@ exports[`Dashboard component should render correctly 1`] = `
           "description": "Blah",
           "id": "456def",
           "note": "This is a note",
+          "user": "user2",
         },
         Object {
           "amount": 340098,
@@ -30,6 +32,7 @@ exports[`Dashboard component should render correctly 1`] = `
           "description": "Another one",
           "id": "789ghi",
           "note": "Text goes here",
+          "user": "user1",
         },
       ]
     }

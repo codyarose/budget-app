@@ -7,6 +7,8 @@ import Error from '../../../components/Error'
 import moment from 'moment'
 import { SingleDatePicker } from 'react-dates'
 
+const noUserExpenses = expenses.map(({ user, ...rest }) => rest)
+
 jest.mock('moment', () => {
 	const moment = jest.requireActual('moment')
 	const mockMoment = (timestamp = 0) => {
@@ -91,9 +93,9 @@ describe('ExpenseForm', () => {
 
 	it('should call onSubmit prop for valid form submission', () => {
 		const onSubmitSpy = jest.fn()
-		const props = { onSubmit: onSubmitSpy, expense: expenses[2] }
+		const props = { onSubmit: onSubmitSpy, expense: noUserExpenses[2] }
 		const wrapper = shallow(<ExpenseForm {...props} />)
-		const values = { ...expenses[2] }
+		const values = { ...noUserExpenses[2] }
 		delete values.id
 
 		wrapper.find('StyledForm').simulate('submit', {
