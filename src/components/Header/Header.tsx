@@ -15,13 +15,17 @@ const Header: FC = () => {
 	return (
 		<header>
 			<h1>Budget</h1>
-			<StyledNavLink exact to="/" activeClassName="is-active">
-				Home
-			</StyledNavLink>
-			<StyledNavLink to="/create" activeClassName="is-active">
-				Create
-			</StyledNavLink>
-			{isAuthed && <button onClick={handleLogout}>Logout</button>}
+			{isAuthed && (
+				<>
+					<StyledNavLink exact to="/" activeClassName="is-active">
+						Dashboard
+					</StyledNavLink>
+					<StyledNavLink to="/create" activeClassName="is-active">
+						Create
+					</StyledNavLink>
+					<button onClick={handleLogout}>Logout</button>
+				</>
+			)}
 		</header>
 	)
 }
