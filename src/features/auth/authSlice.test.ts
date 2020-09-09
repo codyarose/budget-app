@@ -1,9 +1,9 @@
 import auth, {
 	initialState,
-	loginUser,
 	selectIsAuthed,
 	selectUid,
 	logoutUser,
+	setUser,
 } from './authSlice'
 import { initialState as initialFilterState } from '../filter/filterSlice'
 import { initialState as initialExpensesState } from '../expenses/expensesSlice'
@@ -17,7 +17,8 @@ const rootState = {
 describe('authSlice', () => {
 	it('should log in', () => {
 		const uid = 'testUid'
-		const action = { type: loginUser.fulfilled.type, payload: uid }
+		const payload = { displayName: 'name', uid }
+		const action = { type: setUser.type, payload }
 		const nextState = auth(initialState, action)
 
 		rootState.auth = nextState
