@@ -1,5 +1,8 @@
 import React, { FC } from 'react'
 import numeral from 'numeral'
+import styled from 'styled-components'
+
+import PageHeader from '../../../components/common/PageHeader'
 
 interface Props {
 	count: number
@@ -12,12 +15,20 @@ const ExpenseTotal: FC<Props> = ({ count, total }) => {
 	return (
 		<>
 			{!!count && (
-				<div>
-					Showing {count} {expensePlural} totalling {formattedTotal}
-				</div>
+				<StyledPageHeader>
+					Showing <span>{count}</span> {expensePlural} totalling{' '}
+					<span>{formattedTotal}</span>
+				</StyledPageHeader>
 			)}
 		</>
 	)
 }
 
 export default ExpenseTotal
+
+const StyledPageHeader = styled(PageHeader)`
+	padding: ${({ theme }) => `${theme.spacing.sm} 0`};
+	span {
+		font-weight: 500;
+	}
+`
