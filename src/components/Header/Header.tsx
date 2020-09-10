@@ -33,7 +33,7 @@ const Header: FC = () => {
 export default Header
 
 const StyledHeader = styled.header`
-	padding: ${({ theme }) => `${theme.spacing.sm} 0`};
+	padding: ${({ theme }) => `${theme.spacing.md} 0`};
 `
 const StyledContent = styled(ContentContainer)`
 	display: flex;
