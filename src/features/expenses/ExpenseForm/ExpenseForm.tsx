@@ -5,7 +5,7 @@ import { SingleDatePicker } from 'react-dates'
 import 'react-dates/initialize'
 
 import { ExpenseData } from '../expensesSlice'
-import Error from '../../../components/Error'
+import Error from '../../../components/common/Error'
 
 interface Props {
 	expense?: ExpenseData

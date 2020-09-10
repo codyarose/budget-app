@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 
 import ExpenseForm from './index'
 import expenses from '../fixtures'
-import Error from '../../../components/Error'
+import Error from '../../../components/common/Error'
 import moment from 'moment'
 import { SingleDatePicker } from 'react-dates'
 
