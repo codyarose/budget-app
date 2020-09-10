@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { logoutUser, selectIsAuthed } from '../../features/auth/authSlice'
 import ContentContainer from '../common/ContentContainer'
+import Button from '../common/Button'
 
 const Header: FC = () => {
 	const dispatch = useDispatch()
@@ -21,7 +22,7 @@ const Header: FC = () => {
 						<StyledTitle to="/">
 							<h1>Expenses</h1>
 						</StyledTitle>
-						<button onClick={handleLogout}>Logout</button>
+						<Button onClick={handleLogout}>Logout</Button>
 					</StyledContent>
 				</StyledHeader>
 			)}
