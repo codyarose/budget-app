@@ -27,7 +27,6 @@ const ExpenseTotal: FC<Props> = ({ count, total }) => {
 export default ExpenseTotal
 
 const StyledPageHeader = styled(PageHeader)`
-	padding: ${({ theme }) => `${theme.spacing.sm} 0`};
 	span {
 		font-weight: 500;
 	}
