@@ -1,5 +1,7 @@
 import React, { FC } from 'react'
 import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+import styled from 'styled-components'
 
 import ExpenseList from '../../features/expenses/ExpenseList'
 import ExpenseListFilter from '../../features/filter/ExpenseListFilter'
@@ -8,9 +10,7 @@ import {
 	selectVisibleExpenses,
 	selectTotal,
 } from '../../features/expenses/expensesSlice'
-import styled from 'styled-components'
 import ContentContainer from '../common/ContentContainer'
-import { Link } from 'react-router-dom'
 
 const Dashboard: FC = () => {
 	const expenses = useSelector(selectVisibleExpenses)
