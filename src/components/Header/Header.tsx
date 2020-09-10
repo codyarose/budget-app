@@ -1,9 +1,10 @@
 import React, { FC } from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { logoutUser, selectIsAuthed } from '../../features/auth/authSlice'
+import ContentContainer from '../common/ContentContainer'
 
 const Header: FC = () => {
 	const dispatch = useDispatch()
@@ -13,27 +14,35 @@ const Header: FC = () => {
 		dispatch(logoutUser())
 	}
 	return (
-		<header>
-			<h1>Budget</h1>
+		<>
 			{isAuthed && (
-				<>
-					<StyledNavLink exact to="/" activeClassName="is-active">
-						Dashboard
-					</StyledNavLink>
-					<StyledNavLink to="/create" activeClassName="is-active">
-						Create
-					</StyledNavLink>
-					<button onClick={handleLogout}>Logout</button>
-				</>
+				<StyledHeader>
+					<StyledContent>
+						<StyledTitle to="/">
+							<h1>Expenses</h1>
+						</StyledTitle>
+						<button onClick={handleLogout}>Logout</button>
+					</StyledContent>
+				</StyledHeader>
 			)}
-		</header>
+		</>
 	)
 }
 
 export default Header
 
-const StyledNavLink = styled(NavLink)`
-	&.is-active {
-		font-weight: 700;
+const StyledHeader = styled.header`
+	padding: ${({ theme }) => `${theme.spacing.sm} 0`};
+`
+const StyledContent = styled(ContentContainer)`
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+`
+const StyledTitle = styled(Link)`
+	color: ${({ theme }) => theme.colors.black};
+	text-decoration: none;
+	h1 {
+		margin: 0;
 	}
 `
