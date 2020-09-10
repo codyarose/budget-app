@@ -6,6 +6,7 @@ import 'react-dates/initialize'
 
 import { ExpenseData } from '../expensesSlice'
 import Error from '../../../components/common/Error'
+import { TextInput } from '../../../components/common/Inputs'
 
 interface Props {
 	expense?: ExpenseData
@@ -72,7 +73,7 @@ const ExpenseForm: FC<Props> = ({ expense, onSubmit }) => {
 	return (
 		<div>
 			<StyledForm onSubmit={handleSubmit}>
-				<input
+				<TextInput
 					type="text"
 					placeholder="Description"
 					name="description"
@@ -81,7 +82,7 @@ const ExpenseForm: FC<Props> = ({ expense, onSubmit }) => {
 					value={formState.description}
 					onChange={handleInputChange}
 				/>
-				<input
+				<TextInput
 					type="text"
 					placeholder="Amount"
 					name="amount"
@@ -99,7 +100,7 @@ const ExpenseForm: FC<Props> = ({ expense, onSubmit }) => {
 					numberOfMonths={1}
 					isOutsideRange={() => false}
 				/>
-				<input
+				<TextInput
 					type="text"
 					name="note"
 					id="expenseNote"
