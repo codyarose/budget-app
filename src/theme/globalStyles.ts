@@ -15,7 +15,7 @@ export const GlobalStyles = createGlobalStyle<{ theme: ThemeType }>`
 		transition: background-color 0.2s ease-in-out;
 	}
 	.hide-for-mobile {
-		@media screen and (max-width: 600px) {
+		@media ${({ theme }) => theme.breakpoint.sm} {
 			display: none;
 		}
 	}

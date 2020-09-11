@@ -6,6 +6,12 @@ const spacing = {
 	xl: '4rem',
 }
 
+const breakpoint = {
+	xs: 'screen and (max-width: 450px)',
+	sm: 'screen and (max-width: 600px)',
+	md: 'screen and (max-width: 1024px)',
+}
+
 const themeOptions = {
 	light: {
 		colors: {
@@ -15,6 +21,9 @@ const themeOptions = {
 		spacing: {
 			...spacing,
 		},
+		breakpoint: {
+			...breakpoint,
+		},
 	},
 	dark: {
 		colors: {
@@ -23,6 +32,9 @@ const themeOptions = {
 		},
 		spacing: {
 			...spacing,
+		},
+		breakpoint: {
+			...breakpoint,
 		},
 	},
 } as const

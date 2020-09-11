@@ -27,7 +27,7 @@ const ExpenseTotal: FC<Props> = ({ count, total }) => {
 export default ExpenseTotal
 
 const StyledPageHeader = styled(PageHeader)`
-	@media screen and (max-width: 450px) {
+	@media ${({ theme }) => theme.breakpoint.xs} {
 		text-align: center;
 	}
 	span {

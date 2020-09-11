@@ -97,7 +97,7 @@ const StyledFiltersContainer = styled.div`
 		grid-template-columns: auto auto;
 		grid-template-rows: auto;
 	}
-	@media screen and (max-width: 600px) {
+	@media ${({ theme }) => theme.breakpoint.sm} {
 		grid-template-columns: 1fr;
 		grid-template-rows: auto;
 	}

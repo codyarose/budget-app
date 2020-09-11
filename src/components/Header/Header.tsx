@@ -102,7 +102,7 @@ const StyledTitle = styled(Link)`
 	transition: color 0.2s ease-in-out;
 	h1 {
 		margin: 0;
-		@media screen and (max-width: 450px) {
+		@media ${({ theme }) => theme.breakpoint.xs} {
 			font-size: 1.5em;
 		}
 	}

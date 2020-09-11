@@ -41,7 +41,7 @@ const StyledLink = styled(Link)`
 	color: ${({ theme }) => theme.colors.fg};
 	text-decoration: none;
 	transition: background-color 0.1s ease-out, color 0.2s ease-in-out;
-	@media screen and (max-width: 600px) {
+	@media ${({ theme }) => theme.breakpoint.sm} {
 		grid-template-columns: 1fr;
 		grid-template-rows: auto;
 		row-gap: ${({ theme }) => theme.spacing.sm};

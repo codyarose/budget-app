@@ -7,7 +7,7 @@ const ContentContainer = styled.div<{ padBottom?: boolean }>`
 	padding: ${({ theme }) => `0 ${theme.spacing.md}`};
 	${(props) =>
 		props.padBottom && `padding-bottom: ${props.theme.spacing.lg};`}
-	@media screen and (max-width: 450px) {
+	@media ${({ theme }) => theme.breakpoint.xs} {
 		padding: ${({ theme }) => `0 ${theme.spacing.sm}`};
 	}
 `
