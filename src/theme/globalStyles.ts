@@ -12,4 +12,14 @@ export const GlobalStyles = createGlobalStyle`
 		margin: 0;
 		background: #fff;
 	}
+	.hide-for-mobile {
+		@media screen and (max-width: 600px) {
+			display: none;
+		}
+	}
+	.show-for-mobile {
+		@media screen and (min-width: 601px) {
+			display: none;
+		}
+	}
 `
