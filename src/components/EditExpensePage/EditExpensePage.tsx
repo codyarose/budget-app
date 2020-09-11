@@ -1,5 +1,8 @@
 import React, { ReactElement, FC } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import styled from 'styled-components'
+import { RouteComponentProps } from 'react-router-dom'
+
 import {
 	selectExpenses,
 	editExpense,
@@ -7,7 +10,9 @@ import {
 	ExpenseData,
 } from '../../features/expenses/expensesSlice'
 import ExpenseForm from '../../features/expenses/ExpenseForm'
-import { RouteComponentProps } from 'react-router-dom'
+import ContentContainer from '../common/ContentContainer'
+import Button from '../common/Button'
+import PageHeader from '../common/PageHeader'
 
 interface Props {
 	match: {
@@ -39,11 +44,27 @@ const EditExpensePage: FC<Props & RouteComponentProps> = ({
 	}
 
 	return (
-		<div>
+		<ContentContainer padBottom={true}>
+			<PageHeader>
+				<h2>Edit Expense</h2>
+			</PageHeader>
 			<ExpenseForm expense={expenseToEdit} onSubmit={handleSubmit} />
-			<button onClick={handleRemove}>Remove</button>
-		</div>
+			<StyledRemoveButton onClick={handleRemove}>
+				Remove
+			</StyledRemoveButton>
+		</ContentContainer>
 	)
 }
 
 export default EditExpensePage
+
+const StyledRemoveButton = styled(Button)`
+	display: block;
+	width: 100%;
+	max-width: 40%;
+	min-width: 180px;
+	color: darkred;
+	padding: ${({ theme }) => `${theme.spacing.sm}`};
+	margin: ${({ theme }) => `${theme.spacing.sm} auto 0`};
+`
+StyledRemoveButton.displayName = 'RemoveButton'
