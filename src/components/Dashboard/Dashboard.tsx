@@ -11,47 +11,36 @@ import {
 	selectTotal,
 } from '../../features/expenses/expensesSlice'
 import ContentContainer from '../common/ContentContainer'
+import { buttonStyles } from '../common/Button'
 
 const Dashboard: FC = () => {
 	const expenses = useSelector(selectVisibleExpenses)
 	const total = useSelector(selectTotal)
 
 	return (
-		<ContentContainer>
+		<ContentContainer padBottom={true}>
 			<ExpenseTotal count={expenses.length} total={total} />
 			<ExpenseListFilter />
 			<ExpenseList expenses={expenses} />
-			<AddExpenseButtonContainer>
-				<AddExpenseButton title="Add expense" to="/create">
-					+
-				</AddExpenseButton>
-			</AddExpenseButtonContainer>
+			<AddExpenseButton title="Add expense" to="/create">
+				+
+			</AddExpenseButton>
 		</ContentContainer>
 	)
 }
 
 export default Dashboard
 
-const AddExpenseButtonContainer = styled(ContentContainer)`
-	position: absolute;
-	top: 0;
-	left: 50%;
-	transform: translateX(-50%);
-	height: 100%;
-	pointer-events: none;
-`
-
 const AddExpenseButton = styled(Link)`
+	${buttonStyles}
 	--sizing: ${({ theme }) => theme.spacing.lg};
-	position: absolute;
-	right: ${({ theme }) => theme.spacing.md};
-	bottom: ${({ theme }) => theme.spacing.md};
+	position: sticky;
+	left: 100%;
+	bottom: ${({ theme }) => theme.spacing.lg};
+	margin-top: ${({ theme }) => theme.spacing.sm};
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background: ${({ theme }) => theme.colors.white};
-	color: ${({ theme }) => theme.colors.black};
-	border: 2px solid currentColor;
 	width: var(--sizing);
 	height: var(--sizing);
 	text-align: center;
@@ -59,11 +48,6 @@ const AddExpenseButton = styled(Link)`
 	border-radius: 50%;
 	font-size: 3rem;
 	font-weight: 300;
-	box-shadow: 3px 3px 0 currentColor;
 	pointer-events: all;
-	transition: box-shadow 0.25s ease-in-out;
 	text-decoration: none;
-	&:hover {
-		box-shadow: 5px 5px 0 currentColor;
-	}
 `
