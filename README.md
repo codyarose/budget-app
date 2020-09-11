@@ -15,7 +15,7 @@
 	</svg>
 </div>
 
-# <div style="text-align: center;">Budget App [(Live)](https://react-typescript-budget.herokuapp.com/)</div>
+# <div style="text-align: center;">:heavy_dollar_sign: Budget App [(Live)](https://react-typescript-budget.herokuapp.com/)</div>
 
 A full stack expense tracking app built using React, Typescript, Redux, and Firebase. You can add/remove expenses and sort them by date, amount, or title.
 
