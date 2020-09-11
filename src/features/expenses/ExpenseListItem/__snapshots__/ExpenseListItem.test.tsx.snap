@@ -1,21 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ExpenseListItem component should render correctly with expense data 1`] = `
-<div>
-  <Link
+<li>
+  <Styled(Link)
     to="/edit/456def"
   >
-    <h4>
-      Blah
-    </h4>
-  </Link>
-  <p>
-    $26.50
-    -
-    August 30th, 2020
-  </p>
-  <p>
-    This is a note
-  </p>
-</div>
+    <div>
+      <styled.h3>
+        Blah
+      </styled.h3>
+      <styled.span>
+        August 30th, 2020
+      </styled.span>
+    </div>
+    <styled.span>
+      $26.50
+    </styled.span>
+  </Styled(Link)>
+</li>
 `;

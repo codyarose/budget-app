@@ -9,6 +9,7 @@ import {
 } from '../../features/expenses/expensesSlice'
 import expenses from '../../features/expenses/fixtures'
 import ExpenseForm from '../../features/expenses/ExpenseForm'
+import Button from '../common/Button'
 
 jest.mock('react-redux', () => ({
 	useDispatch: jest.fn(),
@@ -62,7 +63,7 @@ describe('EditExpensePage', () => {
 	})
 
 	it('should handle removeExpense', () => {
-		wrapper.find('button').simulate('click')
+		wrapper.find('RemoveButton').simulate('click')
 
 		expect(props.history.push).toHaveBeenLastCalledWith('/')
 		expect(removeExpense).toHaveBeenLastCalledWith(expenses[0].id)

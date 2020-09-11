@@ -1,41 +1,77 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ExpenseList component should render with expenses 1`] = `
-<div>
-  <ExpenseListItem
-    amount={140500}
-    createdAt={1598763926001}
-    description="Title"
-    id="123abc"
-    key="123abc"
-    note=""
-    user="user1"
-  />
-  <ExpenseListItem
-    amount={2650}
-    createdAt={1598763926009}
-    description="Blah"
-    id="456def"
-    key="456def"
-    note="This is a note"
-    user="user2"
-  />
-  <ExpenseListItem
-    amount={340098}
-    createdAt={1598763926345}
-    description="Another one"
-    id="789ghi"
-    key="789ghi"
-    note="Text goes here"
-    user="user1"
-  />
-</div>
+<styled.div>
+  <styled.div>
+    <div
+      className="show-for-mobile"
+    >
+      Expenses
+    </div>
+    <div
+      className="hide-for-mobile"
+    >
+      Expense
+    </div>
+    <div
+      className="hide-for-mobile"
+    >
+      Amount
+    </div>
+  </styled.div>
+  <styled.ul>
+    <ExpenseListItem
+      amount={140500}
+      createdAt={1598763926001}
+      description="Title"
+      id="123abc"
+      key="123abc"
+      note=""
+      user="user1"
+    />
+    <ExpenseListItem
+      amount={2650}
+      createdAt={1598763926009}
+      description="Blah"
+      id="456def"
+      key="456def"
+      note="This is a note"
+      user="user2"
+    />
+    <ExpenseListItem
+      amount={340098}
+      createdAt={1598763926345}
+      description="Another one"
+      id="789ghi"
+      key="789ghi"
+      note="Text goes here"
+      user="user1"
+    />
+  </styled.ul>
+</styled.div>
 `;
 
 exports[`ExpenseList component show render with empty message 1`] = `
-<div>
-  <p>
-    Add an expense
-  </p>
-</div>
+<styled.div>
+  <styled.div>
+    Use the
+     
+    <svg
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      width="25"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+      />
+    </svg>
+     
+    below to add an expense
+  </styled.div>
+</styled.div>
 `;

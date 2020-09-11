@@ -1,6 +1,7 @@
 import React from 'react'
 import { shallow, ShallowWrapper } from 'enzyme'
 import * as redux from 'react-redux'
+import moment from 'moment'
 
 import ExpenseListFilter from './index'
 import {
@@ -15,8 +16,8 @@ import {
 	setEndDate,
 } from '../filterSlice'
 import { filters, altFilters } from '../fixtures'
-import { DateRangePicker } from 'react-dates'
-import moment from 'moment'
+import { TextInput, SelectInput } from '../../../components/common/Inputs'
+import { StyledDateRangePicker } from '../../../components/common/DatePickers'
 
 jest.mock('moment', () => {
 	const moment = jest.requireActual('moment')
@@ -66,7 +67,7 @@ describe('ExpenseListFilter', () => {
 	it('should handle text change', () => {
 		const value = 'new text'
 
-		wrapper.find('input').simulate('change', { target: { value } })
+		wrapper.find(TextInput).simulate('change', { target: { value } })
 
 		expect(setTextFilter).toHaveBeenLastCalledWith(value)
 	})
@@ -76,20 +77,26 @@ describe('ExpenseListFilter', () => {
 
 		;(selectSortBy as jest.Mock).mockReturnValueOnce(altFilters.sortBy)
 		wrapper.setProps({})
-		expect(wrapper.find('select').at(0).prop('value')).toBe(
+		expect(wrapper.find(SelectInput).at(0).prop('value')).toBe(
 			altFilters.sortBy,
 		)
 
-		wrapper.find('select').at(0).simulate('change', { target: { value } })
+		wrapper
+			.find(SelectInput)
+			.at(0)
+			.simulate('change', { target: { value } })
 		wrapper.setProps({})
-		expect(wrapper.find('select').at(0).prop('value')).toBe(value)
+		expect(wrapper.find(SelectInput).at(0).prop('value')).toBe(value)
 		expect(sortByDate).toHaveBeenCalled()
 	})
 
 	it('should handle sort by amount', () => {
 		const value = 'amount'
 
-		wrapper.find('select').at(0).simulate('change', { target: { value } })
+		wrapper
+			.find(SelectInput)
+			.at(0)
+			.simulate('change', { target: { value } })
 
 		expect(sortByAmount).toHaveBeenCalled()
 	})
@@ -98,7 +105,7 @@ describe('ExpenseListFilter', () => {
 		const startDate = moment(0).add(6, 'days')
 		const endDate = moment(0).add(12, 'days')
 
-		wrapper.find(DateRangePicker).prop('onDatesChange')({
+		wrapper.find(StyledDateRangePicker).prop('onDatesChange')({
 			startDate,
 			endDate,
 		})
@@ -110,7 +117,9 @@ describe('ExpenseListFilter', () => {
 	it('should handle date focus changes', () => {
 		const value = 'endDate'
 
-		wrapper.find(DateRangePicker).prop('onFocusChange')(value)
-		expect(wrapper.find(DateRangePicker).prop('focusedInput')).toBe(value)
+		wrapper.find(StyledDateRangePicker).prop('onFocusChange')(value)
+		expect(wrapper.find(StyledDateRangePicker).prop('focusedInput')).toBe(
+			value,
+		)
 	})
 })

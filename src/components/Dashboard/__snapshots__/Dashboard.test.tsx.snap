@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Dashboard component should render correctly 1`] = `
-<div>
+<styled.div
+  padBottom={true}
+>
   <ExpenseTotal
     count={3}
     total={483248}
@@ -37,5 +39,11 @@ exports[`Dashboard component should render correctly 1`] = `
       ]
     }
   />
-</div>
+  <Styled(Link)
+    title="Add expense"
+    to="/create"
+  >
+    +
+  </Styled(Link)>
+</styled.div>
 `;

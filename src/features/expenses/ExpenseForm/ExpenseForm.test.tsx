@@ -5,7 +5,7 @@ import ExpenseForm from './index'
 import expenses from '../fixtures'
 import Error from '../../../components/common/Error'
 import moment from 'moment'
-import { SingleDatePicker } from 'react-dates'
+import { StyledSingleDatePicker } from '../../../components/common/DatePickers'
 
 const noUserExpenses = expenses.map(({ user, ...rest }) => rest)
 
@@ -110,17 +110,19 @@ describe('ExpenseForm', () => {
 		const props = { onSubmit: jest.fn() }
 		const wrapper = shallow(<ExpenseForm {...props} />)
 		const now = moment()
-		wrapper.find(SingleDatePicker).prop('onDateChange')(now)
+		wrapper.find(StyledSingleDatePicker).prop('onDateChange')(now)
 
-		expect(wrapper.find(SingleDatePicker).prop('date')).toEqual(now)
+		expect(wrapper.find(StyledSingleDatePicker).prop('date')).toEqual(now)
 	})
 
 	it('should set calendar focus on change', () => {
 		const props = { onSubmit: jest.fn() }
 		const wrapper = shallow(<ExpenseForm {...props} />)
 		const focused = true
-		wrapper.find(SingleDatePicker).prop('onFocusChange')({ focused })
+		wrapper.find(StyledSingleDatePicker).prop('onFocusChange')({ focused })
 
-		expect(wrapper.find(SingleDatePicker).prop('focused')).toEqual(focused)
+		expect(wrapper.find(StyledSingleDatePicker).prop('focused')).toEqual(
+			focused,
+		)
 	})
 })

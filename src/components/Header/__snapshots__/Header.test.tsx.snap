@@ -1,35 +1,24 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Header component should render correctly when logged in 1`] = `
-<header>
-  <h1>
-    Budget
-  </h1>
-  <Styled(NavLink)
-    activeClassName="is-active"
-    exact={true}
-    to="/"
-  >
-    Dashboard
-  </Styled(NavLink)>
-  <Styled(NavLink)
-    activeClassName="is-active"
-    to="/create"
-  >
-    Create
-  </Styled(NavLink)>
-  <button
-    onClick={[Function]}
-  >
-    Logout
-  </button>
-</header>
+<Fragment>
+  <styled.header>
+    <Styled(styled.div)>
+      <Styled(Link)
+        to="/"
+      >
+        <h1>
+          Expenses
+        </h1>
+      </Styled(Link)>
+      <Button
+        onClick={[Function]}
+      >
+        Logout
+      </Button>
+    </Styled(styled.div)>
+  </styled.header>
+</Fragment>
 `;
 
-exports[`Header component should render correctly when logged out 1`] = `
-<header>
-  <h1>
-    Budget
-  </h1>
-</header>
-`;
+exports[`Header component should render correctly when logged out 1`] = `<Fragment />`;

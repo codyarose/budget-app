@@ -112,10 +112,10 @@ describe('expensesSlice', () => {
 
 	it('should fetch expenses from firebase', async () => {
 		const store = mockStore(rootState)
-		await store.dispatch(setExpenses())
+		await store.dispatch(setExpenses('user1'))
 		const actions = store.getActions()
 
-		expect(actions[1].payload).toEqual(mockExpenses)
+		expect(actions[1].payload).toEqual([mockExpenses[0], mockExpenses[2]])
 	})
 
 	it('should edit expense from firebase', async () => {

@@ -4,6 +4,7 @@ import * as redux from 'react-redux'
 
 import Header from './index'
 import { logoutUser, selectIsAuthed } from '../../features/auth/authSlice'
+import Button from '../common/Button'
 
 jest.mock('react-redux', () => ({
 	useDispatch: jest.fn(),
@@ -37,7 +38,7 @@ describe('Header component', () => {
 
 	it('should call logoutUser on button click', () => {
 		;(selectIsAuthed as jest.Mock).mockReturnValueOnce(true)
-		wrapper.find('button').simulate('click')
+		wrapper.find(Button).simulate('click')
 		wrapper.setProps({})
 
 		expect(logoutUser).toHaveBeenCalled()

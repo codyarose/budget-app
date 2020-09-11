@@ -1,14 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`LoginPage should render correctly 1`] = `
-<div>
-  <h3>
-    Login
-  </h3>
-  <button
-    onClick={[Function]}
-  >
-    Login
-  </button>
-</div>
+<styled.div>
+  <styled.div>
+    <styled.h2>
+      Expense tracking app
+    </styled.h2>
+    <styled.h4>
+      built with React, Typescript, and Firebase
+    </styled.h4>
+    <p>
+      To try it out:
+    </p>
+    <SignInWithGoogle
+      onClick={[Function]}
+    />
+  </styled.div>
+</styled.div>
 `;

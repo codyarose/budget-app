@@ -4,6 +4,7 @@ import * as redux from 'react-redux'
 
 import LoginPage from './index'
 import { loginUser, selectIsAuthed } from '../../features/auth/authSlice'
+import { SignInWithGoogle } from '../common/SignInWithGoogle'
 
 jest.mock('react-redux', () => ({
 	useDispatch: jest.fn(),
@@ -31,7 +32,7 @@ describe('LoginPage', () => {
 	})
 
 	it('should call loginUser on button click', () => {
-		wrapper.find('button').simulate('click')
+		wrapper.find(SignInWithGoogle).simulate('click')
 
 		expect(loginUser).toHaveBeenCalled()
 	})
