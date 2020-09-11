@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 interface Props {
 	onClick?: () => void
@@ -17,7 +17,7 @@ const Button: FC<Props> = ({ onClick, children, className, title }) => {
 
 export default Button
 
-const StyledButton = styled.button`
+export const buttonStyles = css`
 	background: ${({ theme }) => theme.colors.white};
 	color: ${({ theme }) => theme.colors.black};
 	border: 2px solid currentColor;
@@ -25,8 +25,18 @@ const StyledButton = styled.button`
 	font-size: 1rem;
 	box-shadow: 3px 3px 0 currentColor;
 	cursor: pointer;
-	transition: box-shadow 0.25s ease-in-out;
-	&:hover {
+	transition: box-shadow 0.1s ease-in-out, transform 0.1s ease-in-out;
+	&:hover,
+	&:focus {
 		box-shadow: 5px 5px 0 currentColor;
+		outline: none;
 	}
+	&:active {
+		transform: translate(1px, 1px);
+		box-shadow: 4px 4px 0 currentColor;
+	}
+`
+
+const StyledButton = styled.button`
+	${buttonStyles}
 `
