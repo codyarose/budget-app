@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import styled from 'styled-components'
 
-import LoadingIcon from './common/LoadingIcon'
+import LoadingIcon from '../common/LoadingIcon'
 
 const LoadingPage: FC = () => {
 	return (
