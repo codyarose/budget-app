@@ -47,7 +47,7 @@ export const addExpense = createAsyncThunk<Expense, ExpenseData>(
 
 export const setExpenses = createAsyncThunk(
 	'expenses/setExpenses',
-	async (_, { rejectWithValue }) => {
+	async (uid: string, { rejectWithValue }) => {
 		try {
 			const expenses: Expense[] = []
 			await db
