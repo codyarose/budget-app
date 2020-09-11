@@ -1,12 +1,12 @@
 import React, { FC, useState, ChangeEvent, FormEvent } from 'react'
 import styled from 'styled-components'
 import moment, { Moment } from 'moment'
-import { SingleDatePicker } from 'react-dates'
-import 'react-dates/initialize'
 
 import { ExpenseData } from '../expensesSlice'
 import Error from '../../../components/common/Error'
 import { TextInput } from '../../../components/common/Inputs'
+import { StyledSingleDatePicker } from '../../../components/common/DatePickers'
+import Button from '../../../components/common/Button'
 
 interface Props {
 	expense?: ExpenseData
@@ -71,54 +71,64 @@ const ExpenseForm: FC<Props> = ({ expense, onSubmit }) => {
 	}
 
 	return (
-		<div>
-			<StyledForm onSubmit={handleSubmit}>
-				<TextInput
-					type="text"
-					placeholder="Description"
-					name="description"
-					id="expenseDescription"
-					autoFocus
-					value={formState.description}
-					onChange={handleInputChange}
-				/>
-				<TextInput
-					type="text"
-					placeholder="Amount"
-					name="amount"
-					id="expenseAmount"
-					value={formState.amount || ''}
-					onChange={handleAmountChange}
-				/>
-				<Error error={!!error} helperText={error} />
-				<SingleDatePicker
-					date={moment(formState.createdAt)}
-					onDateChange={handleDateChange}
-					focused={calendarFocused}
-					onFocusChange={handleFocusChange}
-					id="datePicker"
-					numberOfMonths={1}
-					isOutsideRange={() => false}
-				/>
-				<TextInput
-					type="text"
-					name="note"
-					id="expenseNote"
-					placeholder="Add a not for your expense (optional)"
-					value={formState.note}
-					onChange={handleInputChange}
-				/>
-				<button type="submit">Add expense</button>
-			</StyledForm>
-		</div>
+		<StyledForm onSubmit={handleSubmit}>
+			<TextInput
+				type="text"
+				placeholder="Description"
+				name="description"
+				id="expenseDescription"
+				autoFocus
+				value={formState.description}
+				onChange={handleInputChange}
+			/>
+			<TextInput
+				type="text"
+				placeholder="Amount"
+				name="amount"
+				id="expenseAmount"
+				value={formState.amount || ''}
+				onChange={handleAmountChange}
+			/>
+			<StyledSingleDatePicker
+				date={moment(formState.createdAt)}
+				onDateChange={handleDateChange}
+				focused={calendarFocused}
+				onFocusChange={handleFocusChange}
+				id="datePicker"
+				numberOfMonths={1}
+				isOutsideRange={() => false}
+			/>
+			<TextInput
+				type="text"
+				name="note"
+				id="expenseNote"
+				placeholder="Add a note to your expense (optional)"
+				value={formState.note}
+				onChange={handleInputChange}
+			/>
+			<Error error={!!error} helperText={error} />
+			<StyledSubmitButton>
+				{expense ? 'Update' : 'Add'} expense
+			</StyledSubmitButton>
+		</StyledForm>
 	)
 }
 
 export default ExpenseForm
 
 const StyledForm = styled.form`
-	display: flex;
-	flex-flow: column;
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: auto;
+	gap: ${({ theme }) => theme.spacing.md};
 `
 
 StyledForm.displayName = 'StyledForm'
+
+const StyledSubmitButton = styled(Button)`
+	width: 100%;
+	max-width: 50%;
+	min-width: 200px;
+	padding: ${({ theme }) => `${theme.spacing.sm}`};
+	margin: ${({ theme }) => theme.spacing.sm} auto 0 auto;
+`
