@@ -6,23 +6,41 @@ import App from './App'
 import { store } from './app/store'
 import * as serviceWorker from './serviceWorker'
 import { firebase } from './firebase/firebase'
-import { setUser } from './features/auth/authSlice'
+import { setUser, logoutUser } from './features/auth/authSlice'
 import { setExpenses } from './features/expenses/expensesSlice'
+import LoadingPage from './components/LoadingPage'
 
-ReactDOM.render(
+const jsx = (
 	<React.StrictMode>
 		<Provider store={store}>
 			<App />
 		</Provider>
-	</React.StrictMode>,
-	document.getElementById('root'),
+	</React.StrictMode>
 )
+
+let hasRendered = false
+const renderApp = () => {
+	if (!hasRendered) {
+		ReactDOM.render(jsx, document.getElementById('root'))
+		hasRendered = true
+	}
+}
+
+ReactDOM.render(<LoadingPage />, document.getElementById('root'))
 
 firebase.auth().onAuthStateChanged((user) => {
 	if (user) {
 		const authUser = localStorage.getItem('authUser')
-		authUser && store.dispatch(setUser(JSON.parse(authUser)))
-		store.dispatch(setExpenses())
+		if (authUser) {
+			const authUserData = JSON.parse(authUser)
+			store.dispatch(setUser(authUserData))
+			store.dispatch(setExpenses(user.uid)).then(() => {
+				renderApp()
+			})
+		}
+	} else {
+		store.dispatch(logoutUser())
+		renderApp()
 	}
 })
 
