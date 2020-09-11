@@ -1,7 +1,7 @@
 <div style="text-align: center;">
 	<svg
 			xmlns="http://www.w3.org/2000/svg"
-			fill="none"
+			fill="#000"
 			viewBox="0 0 24 24"
 			stroke="currentColor"
 			width="100"
@@ -21,7 +21,6 @@ A full stack expense tracking app built using React, Typescript, Redux, and Fire
 
 ## Install
 
----
 
 ```
 npm install
@@ -29,7 +28,6 @@ npm install
 
 ## Usage
 
----
 
 To get it running locally you'll need to add your own Firebase config to `.env`
 
@@ -39,7 +37,6 @@ npm start
 
 ## Testing
 
----
 
 Jest and Enzyme tests are run on a separate Firebase database, with config in `.env.test`.
 
