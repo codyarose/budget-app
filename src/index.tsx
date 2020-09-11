@@ -9,11 +9,14 @@ import { firebase } from './firebase/firebase'
 import { setUser, logoutUser } from './features/auth/authSlice'
 import { setExpenses } from './features/expenses/expensesSlice'
 import LoadingPage from './components/LoadingPage'
+import { ThemeProvider } from './theme/ThemeContext'
 
 const jsx = (
 	<React.StrictMode>
 		<Provider store={store}>
-			<App />
+			<ThemeProvider>
+				<App />
+			</ThemeProvider>
 		</Provider>
 	</React.StrictMode>
 )
@@ -26,7 +29,12 @@ const renderApp = () => {
 	}
 }
 
-ReactDOM.render(<LoadingPage />, document.getElementById('root'))
+ReactDOM.render(
+	<ThemeProvider>
+		<LoadingPage />
+	</ThemeProvider>,
+	document.getElementById('root'),
+)
 
 firebase.auth().onAuthStateChanged((user) => {
 	if (user) {

@@ -2,6 +2,7 @@ import React, { ReactElement, FC } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import { RouteComponentProps } from 'react-router-dom'
+import { lighten } from 'polished'
 
 import {
 	selectExpenses,
@@ -63,7 +64,9 @@ const StyledRemoveButton = styled(Button)`
 	width: 100%;
 	max-width: 40%;
 	min-width: 180px;
-	color: darkred;
+	/* color: darkred; */
+	color: ${({ theme }) =>
+		theme.colors.bg === '#000' ? lighten(0.4, 'darkred') : 'darkred'};
 	padding: ${({ theme }) => `${theme.spacing.sm}`};
 	margin: ${({ theme }) => `${theme.spacing.sm} auto 0`};
 `

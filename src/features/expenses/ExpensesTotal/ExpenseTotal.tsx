@@ -27,6 +27,9 @@ const ExpenseTotal: FC<Props> = ({ count, total }) => {
 export default ExpenseTotal
 
 const StyledPageHeader = styled(PageHeader)`
+	@media screen and (max-width: 450px) {
+		text-align: center;
+	}
 	span {
 		font-weight: 500;
 	}

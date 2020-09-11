@@ -59,8 +59,9 @@ const StyledListHeader = styled.div`
 	display: flex;
 	justify-content: space-between;
 	padding: ${({ theme }) => `${theme.spacing.sm} ${theme.spacing.sm}`};
-	color: ${({ theme }) => rgba(theme.colors.black, 0.5)};
+	color: ${({ theme }) => rgba(theme.colors.fg, 0.7)};
 	border-bottom: 1px solid currentColor;
+	transition: color 0.2s ease-in-out;
 `
 
 const StyledExpenseList = styled.ul`
@@ -68,7 +69,8 @@ const StyledExpenseList = styled.ul`
 	padding: 0;
 	margin: 0;
 	& > *:not(:last-of-type) {
-		border-bottom: 1px solid ${({ theme }) => rgba(theme.colors.black, 0.5)};
+		border-bottom: 1px solid ${({ theme }) => rgba(theme.colors.fg, 0.5)};
+		transition: border-color 0.2s ease-in-out;
 	}
 `
 

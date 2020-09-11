@@ -1,6 +1,7 @@
 import { createGlobalStyle } from 'styled-components'
+import { ThemeType } from '.'
 
-export const GlobalStyles = createGlobalStyle`
+export const GlobalStyles = createGlobalStyle<{ theme: ThemeType }>`
 	html {
 		font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif;
 		box-sizing: border-box;
@@ -10,7 +11,8 @@ export const GlobalStyles = createGlobalStyle`
 	}
 	body {
 		margin: 0;
-		background: #fff;
+		background: ${({ theme }) => theme.colors.bg};
+		transition: background-color 0.2s ease-in-out;
 	}
 	.hide-for-mobile {
 		@media screen and (max-width: 600px) {

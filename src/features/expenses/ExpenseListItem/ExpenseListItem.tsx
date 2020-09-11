@@ -38,9 +38,9 @@ const StyledLink = styled(Link)`
 	column-gap: ${({ theme }) => theme.spacing.md};
 	align-items: center;
 	padding: ${({ theme }) => `${theme.spacing.md} ${theme.spacing.sm}`};
-	color: ${({ theme }) => theme.colors.black};
+	color: ${({ theme }) => theme.colors.fg};
 	text-decoration: none;
-	transition: background-color 0.1s ease-out;
+	transition: background-color 0.1s ease-out, color 0.2s ease-in-out;
 	@media screen and (max-width: 600px) {
 		grid-template-columns: 1fr;
 		grid-template-rows: auto;
@@ -49,7 +49,7 @@ const StyledLink = styled(Link)`
 	}
 
 	&:hover {
-		background-color: ${({ theme }) => rgba(theme.colors.black, 0.04)};
+		background-color: ${({ theme }) => rgba(theme.colors.fg, 0.1)};
 	}
 `
 

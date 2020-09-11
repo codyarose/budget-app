@@ -1,5 +1,6 @@
 import React, { FC } from 'react'
 import styled, { css } from 'styled-components'
+import { transitions } from 'polished'
 
 interface Props {
 	onClick?: () => void
@@ -18,14 +19,19 @@ const Button: FC<Props> = ({ onClick, children, className, title }) => {
 export default Button
 
 export const buttonStyles = css`
-	background: ${({ theme }) => theme.colors.white};
-	color: ${({ theme }) => theme.colors.black};
+	background-color: ${({ theme }) => theme.colors.bg};
+	color: ${({ theme }) => theme.colors.fg};
 	border: 2px solid currentColor;
 	padding: ${({ theme }) => `${theme.spacing.xs} ${theme.spacing.sm}`};
 	font-size: 1rem;
 	box-shadow: 3px 3px 0 currentColor;
 	cursor: pointer;
-	transition: box-shadow 0.1s ease-in-out, transform 0.1s ease-in-out;
+	${transitions(
+		'box-shadow 0.1s ease-in-out',
+		'transform 0.1s ease-in-out',
+		'background-color 0.2s ease-in-out',
+		'color 0.2s ease-in-out',
+	)}
 	&:hover,
 	&:focus {
 		box-shadow: 5px 5px 0 currentColor;

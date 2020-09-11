@@ -26,6 +26,8 @@ export default LoadingIcon
 
 const StyledIcon = styled.svg`
 	animation: spin 2s linear infinite;
+	stroke: ${({ theme }) => theme.colors.fg};
+	transition: stroke 0.2s ease-in-out;
 	@keyframes spin {
 		from {
 			transform: rotate(0deg);

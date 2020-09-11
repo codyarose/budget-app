@@ -58,10 +58,10 @@ export const SignInWithGoogle: FC<Props> = ({ onClick }) => {
 const Button = styled.button`
 	width: 100%;
 	max-width: 240px;
-	/* background-color: #4285f4; */
-	background-color: #fff;
-	/* color: #fff; */
-	color: rgba(0, 0, 0, 0.6);
+	background-color: ${({ theme }) =>
+		theme.colors.bg === '#000' ? '#4285f4' : '#fff'};
+	color: ${({ theme }) =>
+		theme.colors.bg === '#000' ? '#fff' : 'rgba(0, 0, 0, 0.6)'};
 	border-radius: 1px;
 	border: none;
 	padding: 0;
