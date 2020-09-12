@@ -37,6 +37,9 @@ export default LoginPage
 const Title = styled.h2`
 	margin: 0 0 ${({ theme }) => theme.spacing.xs};
 	font-size: 2rem;
+	@media ${({ theme }) => theme.breakpoint.sm} {
+		font-size: 1.5rem;
+	}
 `
 const Subtitle = styled.h4`
 	margin: 0 0 ${({ theme }) => theme.spacing.md};

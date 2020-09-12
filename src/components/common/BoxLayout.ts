@@ -6,6 +6,7 @@ const Layout = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	padding: 0 ${({ theme }) => theme.spacing.md};
 `
 
 const Box = styled.div`
@@ -17,6 +18,9 @@ const Box = styled.div`
 	padding: ${({ theme }) => `${theme.spacing.md} ${theme.spacing.lg}`};
 	box-shadow: ${({ theme }) =>
 		`${theme.spacing.xs} ${theme.spacing.xs} 0 currentColor`};
+	@media ${({ theme }) => theme.breakpoint.sm} {
+		padding: ${({ theme }) => `${theme.spacing.md} ${theme.spacing.sm}`};
+	}
 `
 
 const BoxLayout = {
