@@ -64,7 +64,6 @@ const StyledRemoveButton = styled(Button)`
 	width: 100%;
 	max-width: 40%;
 	min-width: 180px;
-	/* color: darkred; */
 	color: ${({ theme }) =>
 		theme.colors.bg === '#000' ? lighten(0.4, 'darkred') : 'darkred'};
 	padding: ${({ theme }) => `${theme.spacing.sm}`};
